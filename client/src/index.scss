@@ -1,0 +1,90 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+// 1em = 16px
+// 400/16 = 25em
+
+@mixin respond($breakpoint) {
+  // 400px
+  @if $breakpoint == small-phone {
+    @media (max-width: 25em) {
+      @content;
+    }
+  }
+  @if $breakpoint == phone {
+    // 600px
+    @media (max-width: 37.5em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tab-port {
+    // 900px
+    @media (max-width: 56.25em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-grid {
+    // 1100px
+    @media (max-width: 68.75em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-landscape {
+    // 1200px
+    @media (max-width: 75em) {
+      @content;
+    }
+  }
+  @if $breakpoint ==big-desktop {
+    // 1800px
+    @media (min-width: 112.5em) {
+      @content;
+    }
+  }
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+
+  @include respond(tab-landscape) {
+    // 1rem = 9px, 9/16 = 56.25% width<1200
+    font-size: 56.25%;
+  }
+
+  @include respond(tab-port) {
+    // 1rem = 8px , 8/16 =50% width<900
+    font-size: 50%;
+  }
+
+  @include respond(big-desktop) {
+    // 1rem = 12 12/16 =75%
+    font-size: 75%;
+  }
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  padding: 1rem;
+
+  @include respond(tab-port) {
+    // 1rem = 8px , 8/16 =50% width<900
+    padding: 0;
+  }
+}
+
+// body {
+//   overflow-y: hidden; /* Hide vertical scrollbar */
+//   overflow-x: hidden; /* Hide horizontal scrollbar */
+// }

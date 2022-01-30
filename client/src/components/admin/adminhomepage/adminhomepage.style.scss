@@ -1,0 +1,25 @@
+.b{
+    border:1px solid black;
+}
+.r{
+    border:1px solid black;
+}
+.adminHomepage{
+    min-height: 96vh;
+    color:red;
+   
+background: rgb(63,94,251);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(190,214,214,1) 100%);
+border-radius: 5px;
+
+&--box{
+    color:brown;
+    
+    margin: 4rem;
+    min-height: 80vh;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(191,214,214,1) 91%, rgba(190,214,214,1) 98%);
+    border-radius: 5px;
+    
+}
+}
