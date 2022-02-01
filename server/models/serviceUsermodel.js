@@ -14,6 +14,10 @@ const serviceUserSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'service user must have a phone number'],
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const ServiceUser = mongoose.model('ServiceUser', serviceUserSchema);

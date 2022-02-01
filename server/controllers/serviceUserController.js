@@ -16,6 +16,7 @@ exports.CHECKID = (req, res, next, val) => {
 
 exports.getAllServiceUsers = async (req, res) => {
   try {
+    console.log(req.query)
     const serviceusers = await ServiceUser.find();
     res.status(200).json({
       status: 'success',
