@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
-import ServiceUsers from "../ServiceUsers";
-import CreateServiceUser from "./../CreateServiceUser";
-import UpdateServiceUser from "../UpdateServiceUser";
+import ServiceUsers from "./../serviceuser/ServiceUsers";
+import CreateServiceUser from "./../serviceuser/CreateServiceUser";
+import UpdateServiceUser from "./../serviceuser/UpdateServiceUser";
+import Carer from "./../carer/Carer";
+import AddCarer from "./../carer/AddCarer";
 import "./adminhomepage.style.scss";
 
 function AdminHomePage() {
@@ -12,9 +14,11 @@ function AdminHomePage() {
         <div className="col-sm-2 b">
           <div className="row">
             <Link to="serviceusers"> Service Users</Link>
-            <Link to="Carers"> Carers</Link>
           </div>
-          <div className="row">A</div>
+          <div className="row">
+            {" "}
+            <Link to="carers"> Carers</Link>
+          </div>
           <div className="row">A</div>
         </div>
         <div className="col-sm r">
@@ -27,6 +31,9 @@ function AdminHomePage() {
               path="/serviceusers/edit/:id"
               element={<UpdateServiceUser />}
             />
+
+            <Route path="carers" element={<Carer />} />
+            <Route path="carers/add-carer" element={<AddCarer />} />
           </Routes>
         </div>
       </div>
@@ -35,5 +42,3 @@ function AdminHomePage() {
 }
 
 export default AdminHomePage;
-
-

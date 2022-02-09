@@ -28,10 +28,14 @@ export function fetchServiceUsers() {
     try {
       const serviceUserData = await axios.get(BASE_URL);
 
-      let { data } = serviceUserData;
+      let {
+        data: {
+          data: { serviceusers },
+        },
+      } = serviceUserData;
 
-      console.log("ACTION", data);
-      dispatch(setServiceUser(data.data));
+      dispatch(setServiceUser(serviceusers));
+      console.log("function fetchserviceuseraction called");
     } catch (error) {
       dispatch(getServiceUserFailure());
     }
@@ -42,6 +46,7 @@ export function createNewServiceUser(data) {
   return async (dispatch) => {
     try {
       axios.post(BASE_URL, data).then((res) => {
+        console.log("SERVICERESSS", res);
         dispatch(createServiceUser(res));
       });
     } catch (error) {
