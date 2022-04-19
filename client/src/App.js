@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminHomePage from "./components/admin/adminhomepage/AdminHomePage";
-// eslint-disable-next-line react-hooks/exhaustive-deps
+import SignIn from "./components/user/SignIn";
+import HomePage from "./components/homepage/HomePage";
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="admin/*" element={<AdminHomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </BrowserRouter>{" "}
     </div>

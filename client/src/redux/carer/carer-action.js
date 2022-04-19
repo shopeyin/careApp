@@ -1,7 +1,7 @@
 import CarerActionTypes from "./carer-type";
 import axios from "axios";
 
-export const BASE_URL = "http://127.0.0.1:1000/api/v1/users";
+export const BASE_URL = "http://127.0.0.1:1000/api/v1/carers";
 
 export const getCarers = () => ({
   type: CarerActionTypes.GET_CARERS,
@@ -35,7 +35,6 @@ export function fetchCarers() {
       } = carerData;
 
       dispatch(setCarer(users));
-      console.log("function fetcCARERaction called");
     } catch (error) {
       dispatch(getCarerFailure());
     }
@@ -45,14 +44,19 @@ export function fetchCarers() {
 export function createNewCarer(data, callBack) {
   return async (dispatch) => {
     try {
-      axios.post(BASE_URL, data).then((res) => {
-        console.log("RESSS", res);
+      const newCarer = await axios.post(BASE_URL, data);
+      let {
+        data: {
+          data: { user },
+        },
+      } = newCarer;
 
-        dispatch(createCarer(res));
-        callBack();
-      });
+      dispatch(createCarer(user));
+      callBack();
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 }
+
+//

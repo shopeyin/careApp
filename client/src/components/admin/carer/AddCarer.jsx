@@ -10,7 +10,6 @@ function AddCarer({ createNewCarer, fetchCarers }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
- 
   const navigate = useNavigate();
   const goToPreviousPage = () => {
     navigate(-1);
@@ -29,6 +28,7 @@ function AddCarer({ createNewCarer, fetchCarers }) {
     createNewCarer(data, fetchCarers);
 
     goToPreviousPage();
+    console.log('submitttingggg')
   };
   return (
     <div>

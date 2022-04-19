@@ -35,7 +35,6 @@ export function fetchServiceUsers() {
       } = serviceUserData;
 
       dispatch(setServiceUser(serviceusers));
-      console.log("function fetchserviceuseraction called");
     } catch (error) {
       dispatch(getServiceUserFailure());
     }
@@ -46,7 +45,6 @@ export function createNewServiceUser(data) {
   return async (dispatch) => {
     try {
       axios.post(BASE_URL, data).then((res) => {
-        console.log("SERVICERESSS", res);
         dispatch(createServiceUser(res));
       });
     } catch (error) {
