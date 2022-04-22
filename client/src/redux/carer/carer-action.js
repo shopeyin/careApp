@@ -41,15 +41,17 @@ export function fetchCarers() {
   };
 }
 
-export function createNewCarer(data, callBack) {
+export function createNewCarer(dat, callBack) {
   return async (dispatch) => {
     try {
-      const newCarer = await axios.post(BASE_URL, data);
+      const newCarer = await axios.post(BASE_URL, dat);
+      console.log("NEW CARER", newCarer);
+      console.log("NEW CARER", newCarer.data.user);
+
       let {
-        data: {
-          data: { user },
-        },
+        data: { user },
       } = newCarer;
+      console.log("DATA", user);
 
       dispatch(createCarer(user));
       callBack();

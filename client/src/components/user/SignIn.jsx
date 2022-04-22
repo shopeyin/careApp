@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../../redux/user/user-action";
 
 import { connect } from "react-redux";
 
-function SignIn({ login }) {
+import axios from "axios";
+
+export const BASE_URL = "http://127.0.0.1:1000/api/v1/carers/login";
+
+function SignIn({ login, currentUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("Authtoken")) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -15,9 +28,21 @@ function SignIn({ login }) {
       password,
     };
 
-    console.log(data);
     login(data);
+    navigate("/carer");
+
+    // try {
+    //   const loggedInUser = await axios.post(BASE_URL, itemAuth);
+
+    //   let { data } = loggedInUser;
+
+    //   localStorage.setItem("Authtoken", data.token);
+    //   navigate("/carer");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
+
   return (
     <div className="container">
       <div className="row">
@@ -60,4 +85,12 @@ const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(login(data)),
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    loading: state.carers.loading,
+    currentUser: state.user.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

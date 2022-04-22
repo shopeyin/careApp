@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-function HomePage() {
+function HomePage({ currentUser }) {
+  let navigate = useNavigate();
+
   return <div>HomePage</div>;
 }
 
-export default HomePage;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    loading: state.carers.loading,
+    currentUser: state.user.currentUser,
+  };
+};
+
+export default connect(mapStateToProps)(HomePage);

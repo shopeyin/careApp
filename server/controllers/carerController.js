@@ -114,7 +114,7 @@ exports.loginCarer = async (req, res) => {
   try {
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      res
+      return res
         .status(401)
         .json({ status: 'fail', error: 'User or Email not found' });
     }
@@ -123,14 +123,7 @@ exports.loginCarer = async (req, res) => {
       return res.status(401).json({ status: 'fail', error: 'invalid details' });
     }
 
-    // res.status(200).json({
-    //   status: 'success',
-    //   token: 'token oo',
-    //   data: {
-    //     user,
-    //   },
-    // });
-    sendToken(user, 200, res);
+    return sendToken(user, 200, res);
   } catch (err) {
     res.status(500).json({
       status: 'fail',
@@ -141,8 +134,10 @@ exports.loginCarer = async (req, res) => {
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  res.status(statusCode).json({
-    status: 'success',
+
+  return res.status(statusCode).json({
+    status: 'success oo',
     token,
+    user,
   });
 };

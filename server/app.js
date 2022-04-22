@@ -9,7 +9,7 @@ app.use(cors());
 
 const serviceUserRouter = require('./routes/serviceUserRoutes');
 const carerRouter = require('./routes/carerRoutes');
-const getPrivateDataRouter = require('./routes/privateRouter');
+const getPrivateDataRoute = require('./routes/privateRoute');
 
 //MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/serviceusers', serviceUserRouter);
 app.use('/api/v1/carers', carerRouter);
-app.use('/api/v1/private', getPrivateDataRouter);
+app.use('/api/v1/private', getPrivateDataRoute);
 
 app.all('*', (req, res, next) => {
   // res.status(404).json({

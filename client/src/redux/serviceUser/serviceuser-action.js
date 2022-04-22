@@ -45,6 +45,7 @@ export function createNewServiceUser(data) {
   return async (dispatch) => {
     try {
       axios.post(BASE_URL, data).then((res) => {
+        console.log("HERE OO", res);
         dispatch(createServiceUser(res));
       });
     } catch (error) {
