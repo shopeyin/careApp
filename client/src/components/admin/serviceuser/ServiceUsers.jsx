@@ -17,7 +17,7 @@ function ServiceUsers({
 }) {
   useEffect(() => {
     fetchServiceUsers();
-    console.log("component for serviceusers called");
+    
   }, [fetchServiceUsers, reMountComponent]);
 
   const handleDelete = async (id) => {

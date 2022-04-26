@@ -4,10 +4,6 @@ import { login } from "../../redux/user/user-action";
 
 import { connect } from "react-redux";
 
-import axios from "axios";
-
-export const BASE_URL = "http://127.0.0.1:1000/api/v1/carers/login";
-
 function SignIn({ login, currentUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +14,7 @@ function SignIn({ login, currentUser }) {
     if (localStorage.getItem("Authtoken")) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,19 +24,8 @@ function SignIn({ login, currentUser }) {
       password,
     };
 
-    login(data);
+    await login(data);
     navigate("/carer");
-
-    // try {
-    //   const loggedInUser = await axios.post(BASE_URL, itemAuth);
-
-    //   let { data } = loggedInUser;
-
-    //   localStorage.setItem("Authtoken", data.token);
-    //   navigate("/carer");
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (
@@ -89,7 +74,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     loading: state.carers.loading,
-    currentUser: state.user.currentUser,
+  
   };
 };
 

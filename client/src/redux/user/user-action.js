@@ -8,9 +8,9 @@ export const setCurrentUser = (user) => ({
   payload: user,
 });
 export const logOutUser = () => ({
-  type: UserActionTypes.SIGN_OUT
- 
+  type: UserActionTypes.SIGN_OUT,
 });
+
 export function login(userdata) {
   return async (dispatch) => {
     try {
@@ -19,9 +19,30 @@ export function login(userdata) {
       let { data } = loggedInUser;
 
       localStorage.setItem("Authtoken", data.token);
-      dispatch(setCurrentUser(data.user));
+      //dispatch(setCurrentUser(data.user));
     } catch (error) {
       console.log(error.response.data);
     }
   };
 }
+
+export const fetchUserData = () => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("Authtoken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        `http://127.0.0.1:1000/api/v1/private`,
+        config
+      );
+      console.log(data.data);
+       dispatch(setCurrentUser(data.data));
+    } catch (error) {
+      localStorage.removeItem("Authtoken");
+    }
+  };
+};

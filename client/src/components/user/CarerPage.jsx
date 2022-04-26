@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { logOutUser } from "../../redux/user/user-action";
+import { logOutUser, fetchUserData } from "../../redux/user/user-action";
 import axios from "axios";
 
-function CarerPage({ currentUser, logOutUser }) {
+function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    // if (!localStorage.getItem("Authtoken")) {
-    //   navigate("/signin");
-    // }
+    if (!localStorage.getItem("Authtoken")) {
+      navigate("/signin");
+    }
 
-    const fetchData = async () => {
-      if (currentUser) {
-        try {
-          const loggedInUser = await axios.get(
-            `http://127.0.0.1:1000/api/v1/carers/${currentUser._id}`
-          );
 
-          console.log(loggedInUser);
-        } catch (error) {
-          localStorage.removeItem("Authtoken");
-        }
-      }
-    };
-
-    fetchData();
-  }, [currentUser]);
+    fetchUserData();
+  }, [fetchUserData, navigate]);
 
   const logOut = () => {
     localStorage.removeItem("Authtoken");
@@ -45,6 +32,7 @@ function CarerPage({ currentUser, logOutUser }) {
 
 const mapDispatchToProps = (dispatch) => ({
   logOutUser: () => dispatch(logOutUser()),
+  fetchUserData: () => dispatch(fetchUserData()),
 });
 
 const mapStateToProps = (state) => {
