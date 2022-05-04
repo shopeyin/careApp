@@ -24,6 +24,7 @@ exports.getAllCarers = async (req, res) => {
 exports.getCarer = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    console.log('PAPRAMS', req);
 
     res.status(200).json({
       status: 'success',

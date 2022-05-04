@@ -17,7 +17,6 @@ function ServiceUsers({
 }) {
   useEffect(() => {
     fetchServiceUsers();
-    
   }, [fetchServiceUsers, reMountComponent]);
 
   const handleDelete = async (id) => {
@@ -34,7 +33,8 @@ function ServiceUsers({
     itemsToRender = serviceUsers.map((serviceuser) => {
       return (
         <div key={serviceuser._id}>
-          {serviceuser._id} || {serviceuser.name} and {serviceuser.address}
+          <Link to={`profile/${serviceuser._id}`}>{serviceuser._id}</Link> ||{" "}
+          {serviceuser.name} and {serviceuser.address}
           <Link to={`edit/${serviceuser._id}`}>Edit Service Users</Link>
           <button
             onClick={() => {
@@ -53,7 +53,7 @@ function ServiceUsers({
   return (
     <div>
       {itemsToRender}
-      <Link to="add">Add Service Users</Link>
+      <Link to="add-serviceuser">Add Service Users</Link>
     </div>
   );
 }

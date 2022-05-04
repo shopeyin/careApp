@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOutUser, fetchUserData } from "../../redux/user/user-action";
-import axios from "axios";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   let navigate = useNavigate();
 
   useEffect(() => {
     if (!localStorage.getItem("Authtoken")) {
-      navigate("/signin");
+      navigate("/");
     }
-
 
     fetchUserData();
   }, [fetchUserData, navigate]);
@@ -19,7 +17,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const logOut = () => {
     localStorage.removeItem("Authtoken");
     logOutUser();
-    navigate("/signin");
+    navigate("/");
   };
 
   return (

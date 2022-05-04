@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { fetchCarers } from "../../../redux/carer/carer-action";
 import { reMount } from "../../../redux/remount/remount-action.type";
 
@@ -9,15 +9,14 @@ function Carer({ fetchCarers, carers }) {
   React.useEffect(() => {
     fetchCarers();
     console.log("carer component remounting");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCarers]);
 
   let itemsToRender;
   if (carers) {
     itemsToRender = carers.map((carer) => {
       return (
         <div key={carer._id}>
-          {carer._id} || {carer.name}
+          <Link to={`profile/${carer._id}`}>{carer.name} </Link> {carer._id}
         </div>
       );
     });

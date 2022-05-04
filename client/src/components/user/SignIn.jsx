@@ -4,9 +4,10 @@ import { login } from "../../redux/user/user-action";
 
 import { connect } from "react-redux";
 
-function SignIn({ login, currentUser }) {
+function SignIn({ login }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [tokenLoaded, setTokenloaded] = useState(false);
 
   let navigate = useNavigate();
 
@@ -14,6 +15,7 @@ function SignIn({ login, currentUser }) {
     if (localStorage.getItem("Authtoken")) {
       navigate("/");
     }
+    setTokenloaded(true);
   }, [navigate]);
 
   const handleSubmit = async (e) => {
@@ -25,57 +27,53 @@ function SignIn({ login, currentUser }) {
     };
 
     await login(data);
-    navigate("/carer");
+    navigate("/");
   };
 
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <form onSubmit={handleSubmit}>
-            {" "}
-            <div className="form-group">
-              <label htmlFor="exampleInputTitle">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                value={email}
-                aria-describedby="TitleHelp"
-              />
-              <label htmlFor="exampleInputTitle">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                value={password}
-                aria-describedby="TitleHelp"
-              />
+  if (tokenLoaded) {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6">
+            <form onSubmit={handleSubmit}>
+              {" "}
+              <div className="form-group">
+                <label htmlFor="exampleInputTitle">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  value={email}
+                  aria-describedby="TitleHelp"
+                />
+                <label htmlFor="exampleInputTitle">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  value={password}
+                  aria-describedby="TitleHelp"
+                />
 
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
-            </div>
-          </form>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <div>Loading</div>;
+  }
 }
 const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(login(data)),
 });
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    loading: state.carers.loading,
-  
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignIn);
