@@ -37,11 +37,13 @@ const mapDispatchToProps = (dispatch) => ({
   reMount: () => dispatch(reMount()),
 });
 
-const mapStateToProps = (state) => ({
-  loading: state.carers.loading,
-  carers: state.carers.carers,
-  hasErrors: state.carers.hasErrors,
-  reMountComponent: state.remount.reload,
-});
+const mapStateToProps = (state) => {
+  return {
+    loading: state.carers.loading,
+    carers: state.carers.carers,
+    hasErrors: state.carers.hasErrors,
+    reMountComponent: state.remount.reload,
+  };
+};
 // Connect Redux to React
 export default connect(mapStateToProps, mapDispatchToProps)(Carer);
