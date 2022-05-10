@@ -1,4 +1,4 @@
-const ServiceUser = require('./../models/serviceUsermodel');
+const ServiceUser = require('../models/ServiceUserModel');
 exports.CHECKID = (req, res, next, val) => {
   console.log('checking ID', val);
   next();

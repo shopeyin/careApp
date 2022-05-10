@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function Task() {
+import { addTaskToUser } from "./taskFunctions";
+function Task({ serviceuserId, taskToggle, remountComponent }) {
   const [taskName, setTaskName] = useState("");
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(taskName);
+    const data = {
+      nameOfTask: taskName,
+    };
+
+    addTaskToUser(serviceuserId, data);
+    setTaskName("");
+    remountComponent();
+    taskToggle();
   };
   return (
     <div>
@@ -12,7 +22,7 @@ function Task() {
       <form onSubmit={handleSubmit}>
         {" "}
         <div className="form-group">
-          <label htmlFor="exampleInputTitle">Service User Name</label>
+          <label htmlFor="exampleInputTitle">Task</label>
           <input
             type="text"
             className="form-control"
@@ -22,7 +32,7 @@ function Task() {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Submit
+          Add task
         </button>
       </form>{" "}
     </div>

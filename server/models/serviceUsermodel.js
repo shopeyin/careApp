@@ -19,6 +19,8 @@ const serviceUserSchema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
+
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
 });
 
 const ServiceUser = mongoose.model('ServiceUser', serviceUserSchema);
