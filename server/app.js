@@ -7,10 +7,11 @@ const globalErrorHandler = require('./controllers/errorController');
 const app = express();
 app.use(cors());
 
-const serviceUserRouter = require('./routes/serviceUserRoutes');
-const carerRouter = require('./routes/carerRoutes');
+const serviceUserRoute = require('./routes/serviceUserRoutes');
+const carerRoute = require('./routes/carerRoutes');
 const getPrivateDataRoute = require('./routes/privateRoute');
-const taskRouter = require('./routes/taskRoute');
+const taskRoute = require('./routes/taskRoute');
+const visitRoute = require('./routes/visitRoute');
 
 //MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
@@ -32,9 +33,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/v1/serviceusers', serviceUserRouter);
-app.use('/api/v1/carers', carerRouter);
-app.use('/api/v1/task', taskRouter);
+app.use('/api/v1/serviceusers', serviceUserRoute);
+app.use('/api/v1/carers', carerRoute);
+app.use('/api/v1/task', taskRoute);
+app.use('/api/v1/visit', visitRoute);
 app.use('/api/v1/private', getPrivateDataRoute);
 
 app.all('*', (req, res, next) => {

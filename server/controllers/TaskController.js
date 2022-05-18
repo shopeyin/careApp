@@ -4,6 +4,7 @@ const ServiceUser = require('./../models/ServiceUserModel');
 exports.createTask = async (req, res) => {
   try {
     const newTask = await Task.create(req.body);
+    
     const serviceuser = await ServiceUser.findByIdAndUpdate(req.params.id, {
       $push: { tasks: newTask._id },
     });

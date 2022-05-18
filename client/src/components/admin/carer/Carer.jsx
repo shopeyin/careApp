@@ -1,29 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchCarers } from "../../../redux/carer/carer-action";
-import { reMount } from "../../../redux/remount/remount-action.type";
+import { reMount } from "../../../../src/redux/remount/remount-action";
 
-function Carer({ fetchCarers, carers }) {
-  console.log(carers);
-  React.useEffect(() => {
-    fetchCarers();
-    console.log("carer component remounting");
-  }, [fetchCarers]);
-
+function Carer({ carers }) {
   let itemsToRender;
   if (carers) {
     itemsToRender = carers.map((carer) => {
       return (
         <div key={carer._id}>
           <Link to={`profile/${carer._id}`}>{carer.name} </Link> {carer._id}
+          {carer.name}
         </div>
       );
     });
   } else {
     itemsToRender = "Loading...";
   }
-
   return (
     <div>
       {itemsToRender}

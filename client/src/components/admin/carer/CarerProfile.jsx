@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
+
 import { useSelector } from "react-redux";
-import { BASE_URL } from "../../../redux/carer/carer-action";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import Visit from "../visit/Visit";
+import { useParams } from "react-router-dom";
+
 function CarerProfile() {
   const params = useParams();
 
@@ -15,12 +16,13 @@ function CarerProfile() {
 
     carer = found;
   });
-
+  
   return (
     <div>
       <h2>CarerProfile</h2>
       <p>{carer.name}</p>
-      <button>Add visit</button>
+
+      <Visit carerId={carer._id} />
       <h3>All carer VISITs</h3>
     </div>
   );

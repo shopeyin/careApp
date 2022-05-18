@@ -5,19 +5,17 @@ import {
   fetchServiceUsers,
   BASE_URL,
 } from "../../../redux/serviceUser/serviceuser-action";
-import { reMount } from "../../../redux/remount/remount-action.type";
+import { reMount } from "../../../redux/remount/remount-action";
 import axios from "axios";
 
 function ServiceUsers({
   loading,
   serviceUsers,
-  fetchServiceUsers,
+
   reMount,
   reMountComponent,
 }) {
-  useEffect(() => {
-    fetchServiceUsers();
-  }, [fetchServiceUsers, reMountComponent]);
+  useEffect(() => {}, [reMountComponent]);
 
   const handleDelete = async (id) => {
     try {
