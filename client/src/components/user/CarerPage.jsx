@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOutUser, fetchUserData } from "../../redux/user/user-action";
 import axios from "axios";
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
-  const [visits, setVisits] = useState([]);
+  const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
 
   let navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("Authtoken")) {
       navigate("/");
     }
-
     fetchUserData();
   }, [fetchUserData, navigate]);
 
@@ -22,14 +21,13 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
       const fetchVisit = async () => {
         try {
           const visitData = await axios.get(`${BASE_URL}/${currentUser._id}`);
-
           const {
             data: {
               data: { visit },
             },
           } = visitData;
           console.log(visit[0].serviceusersToVisit);
-          setVisits(visit[0].serviceusersToVisit);
+          setServiceUsersVisit(visit[0].serviceusersToVisit);
         } catch (err) {
           console.log(err);
         }
@@ -44,15 +42,22 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     navigate("/");
   };
 
-  console.log(visits);
+  console.log(serviceUsersVisit);
   return (
     <div>
       {currentUser ? currentUser.name : ""} page
       <button onClick={logOut}>Logout</button>
       <h3>All Service User To Visit</h3>
-      {visits.map((visit) => {
-        return <p key={visit._id}>{visit.name}</p>;
-      })} 
+      {serviceUsersVisit.map((serviceUser) => {
+        return (
+          <div key={serviceUser._id}>
+            <Link to={`activities/${serviceUser._id}`}>
+              {" "}
+              {serviceUser.name} {serviceUser._id}
+            </Link>{" "}
+          </div>
+        );
+      })}
     </div>
   );
 }

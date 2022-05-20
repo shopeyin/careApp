@@ -1,13 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const visitSchema = new mongoose.Schema({
-  careruser: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
+  careruser: { type: mongoose.SchemaTypes.ObjectId, ref: 'User' },
 
   serviceusersToVisit: [
-    { type: mongoose.SchemaTypes.ObjectId, ref: "ServiceUser" },
+    { type: mongoose.SchemaTypes.ObjectId, ref: 'ServiceUser' },
   ],
 
-  dateOfVisit: Date,
+  dateOfVisit: {
+    type: Date,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    select: false,
+  },
 });
 
-module.exports = mongoose.model("Visit", visitSchema);
+module.exports = mongoose.model('Visit', visitSchema);

@@ -1,15 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import { format, addDays, formatISO } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
+
 function Visit({ carerId, serviceUsers }) {
   const [visit, setVisit] = React.useState([]);
 
   const [show, setShow] = React.useState(false);
 
   const [serviceUserInfo, setServiceUserInfo] = React.useState([]);
+  const [selectedDate, setSelectedDate] = React.useState(null);
 
   let dataId = {
     careruser: carerId,
@@ -17,6 +22,8 @@ function Visit({ carerId, serviceUsers }) {
 
   const updateVisitData = {
     serviceusersToVisit: serviceUserInfo,
+    //dateOfVisit: addDays(selectedDate, 1)
+    dateOfVisit: selectedDate,
   };
 
   const handleSubmit = async (visitId) => {
@@ -25,6 +32,8 @@ function Visit({ carerId, serviceUsers }) {
 
       updateVisitData
     );
+    console.log(updateVisitData);
+    // console.log(addDays(new Date(), 1));
   };
 
   const createVisit = async () => {
@@ -50,7 +59,8 @@ function Visit({ carerId, serviceUsers }) {
     setShow(true);
     createVisit();
   };
-  console.log(serviceUserInfo);
+  // console.log(serviceUserInfo);
+  console.log(selectedDate);
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -69,7 +79,17 @@ function Visit({ carerId, serviceUsers }) {
         </Modal.Header>
         <Modal.Body>
           {" "}
-          Date and All the service users{" "}
+          Date{" "}
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="yyyy/MM/dd"
+            minDate={new Date()}
+            isClearable
+            showYearDropdown
+            scrollableMonthYearDropdown
+          />
+          All the service users{" "}
           {serviceUsers.map((serviceUser) => {
             return (
               <p key={serviceUser._id}>

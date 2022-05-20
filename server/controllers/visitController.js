@@ -20,9 +20,8 @@ exports.createVisit = async (req, res) => {
 
 exports.addServiceUserToVisit = async (req, res) => {
   try {
-    console.log("hereoo",req.body.serviceusersToVisit);
+    console.log('hereoo', req.body.serviceusersToVisit);
     const serviceUserToAdd = await Visit.findByIdAndUpdate(req.params.id, {
-      
       $addToSet: { serviceusersToVisit: req.body.serviceusersToVisit },
 
       dateOfVisit: req.body.dateOfVisit,
