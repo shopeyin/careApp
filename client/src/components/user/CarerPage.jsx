@@ -6,6 +6,7 @@ import axios from "axios";
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
+  console.log("HERE", currentUser);
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
 
   let navigate = useNavigate();

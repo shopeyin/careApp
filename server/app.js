@@ -12,6 +12,7 @@ const carerRoute = require('./routes/carerRoutes');
 const getPrivateDataRoute = require('./routes/privateRoute');
 const taskRoute = require('./routes/taskRoute');
 const visitRoute = require('./routes/visitRoute');
+const visitInformationRoute = require('./routes/visitInformationRoute');
 
 //MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
@@ -37,6 +38,7 @@ app.use('/api/v1/serviceusers', serviceUserRoute);
 app.use('/api/v1/carers', carerRoute);
 app.use('/api/v1/task', taskRoute);
 app.use('/api/v1/visit', visitRoute);
+app.use('/api/v1/visitInformation', visitInformationRoute);
 app.use('/api/v1/private', getPrivateDataRoute);
 
 app.all('*', (req, res, next) => {
