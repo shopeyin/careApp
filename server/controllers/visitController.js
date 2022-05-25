@@ -42,10 +42,12 @@ exports.addServiceUserToVisit = async (req, res) => {
 };
 
 exports.fetchCarerDayVisit = async (req, res) => {
+  console.log(req.query.dateOfVisit);
+  console.log('endpoint hit');
   try {
     const dayVisit = await Visit.find({
       careruser: req.params.id,
-      // dateOfVisit: "2022-05-18",
+      dateOfVisit:'2022-05-21T23:00:00.000+00:00',
     })
       .populate('serviceusersToVisit')
       .exec();

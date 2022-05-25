@@ -4,7 +4,7 @@ import { fetchAllTaskofaServiceUser } from "../admin/task/taskFunctions";
 import { addVisitInfo } from "./utils";
 import { useParams, useNavigate } from "react-router-dom";
 function ServiceUserActivities({ currentUser }) {
-  console.log(currentUser);
+  
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
   const [activities, setActivities] = useState({});
@@ -71,7 +71,7 @@ function ServiceUserActivities({ currentUser }) {
         JSON.stringify([...yesDisabled, e.target.id])
       );
     } else {
-      console.log(Array.isArray(yesDisabled));
+     
       let results = yesDisabled.filter((id) => id !== e.target.id);
 
       setYesDisabled(results);
@@ -93,9 +93,9 @@ function ServiceUserActivities({ currentUser }) {
     visitNote: visitNote,
     carerid: currentUser._id,
     serviceuserid: params.id,
-    activities: {
-      activities,
-    },
+   
+    activities,
+    
   };
 
   return (

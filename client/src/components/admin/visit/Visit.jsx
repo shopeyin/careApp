@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
+import { format, addDays, addHours } from "date-fns";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,8 +23,8 @@ function Visit({ carerId, serviceUsers }) {
 
   const updateVisitData = {
     serviceusersToVisit: serviceUserInfo,
-    //dateOfVisit: addDays(selectedDate, 1)
-    dateOfVisit: selectedDate,
+
+    dateOfVisit: addHours(selectedDate, 1),
   };
 
   const handleSubmit = async (visitId) => {

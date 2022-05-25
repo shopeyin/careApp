@@ -8,7 +8,7 @@ const visitInformationSchema = new mongoose.Schema({
     activities: {},
     createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date(),
     },
   });
   
