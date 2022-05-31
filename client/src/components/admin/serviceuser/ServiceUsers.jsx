@@ -11,11 +11,14 @@ import axios from "axios";
 function ServiceUsers({
   loading,
   serviceUsers,
-
+  fetchServiceUsers,
   reMount,
   reMountComponent,
 }) {
-  useEffect(() => {}, [reMountComponent]);
+  useEffect(() => {
+    fetchServiceUsers();
+    console.log("serviceusers component");
+  }, [reMountComponent]);
 
   const handleDelete = async (id) => {
     try {

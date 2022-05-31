@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
-import { format, addDays, addHours } from "date-fns";
+import { addHours } from "date-fns";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -60,7 +60,8 @@ function Visit({ carerId, serviceUsers }) {
     setShow(true);
     createVisit();
   };
-  // console.log(serviceUserInfo);
+   console.log(serviceUserInfo);
+  console.log("VISIT ERE", visit);
   console.log(selectedDate);
   return (
     <>

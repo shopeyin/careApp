@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import { connect } from "react-redux";
 import { logOutUser, fetchUserData } from "../../redux/user/user-action";
 import axios from "axios";
@@ -7,6 +9,7 @@ const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -16,11 +19,25 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     fetchUserData();
   }, [fetchUserData, navigate]);
 
+  let data = {
+    dateOfVisit: "2022-05-21T23:00:00.000+00:00",
+  };
+  let newSelectedDate = format(new Date(selectedDate), "yyyy-MM-dd");
+  let concate = newSelectedDate + "T00:00:00.000+00:00";
+  console.log(concate);
+  console.log(format(new Date(selectedDate), "yyyy-MM-dd"));
+
   useEffect(() => {
+    console.log("called  effectoo");
     if (currentUser) {
       const fetchVisit = async () => {
         try {
-          const visitData = await axios.get(`${BASE_URL}/${currentUser._id}`);
+          console.log("called data");
+          const visitData = await axios.post(`${BASE_URL}/${currentUser._id}`, {
+            dateOfVisit:
+              format(new Date(selectedDate), "yyyy-MM-dd") +
+              "T00:00:00.000+00:00",
+          });
           const {
             data: {
               data: { visit },
@@ -34,7 +51,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
       };
       fetchVisit();
     }
-  }, [currentUser]);
+  }, [currentUser, selectedDate]);
 
   const logOut = () => {
     localStorage.removeItem("Authtoken");
@@ -42,12 +59,21 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     navigate("/");
   };
 
-  console.log(serviceUsersVisit);
   return (
     <div>
       {currentUser ? currentUser.name : ""} page
       <button onClick={logOut}>Logout</button>
       <h3>All Service User To Visit</h3>
+      Date{" "}
+      <DatePicker
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
+        dateFormat="yyyy/MM/dd"
+        minDate={new Date()}
+        isClearable
+        showYearDropdown
+        scrollableMonthYearDropdown
+      />
       {serviceUsersVisit.map((serviceUser) => {
         return (
           <div key={serviceUser._id}>

@@ -45,8 +45,7 @@ export function createNewCarer(dat, callBack) {
   return async (dispatch) => {
     try {
       const newCarer = await axios.post(BASE_URL, dat);
-      console.log("NEW CARER", newCarer);
-      console.log("NEW CARER", newCarer.data.user);
+      
 
       let {
         data: { user },
