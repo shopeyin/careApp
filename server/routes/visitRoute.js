@@ -3,11 +3,13 @@ const visitController = require('../controllers/visitController');
 
 const router = express.Router();
 router.route('/').post(visitController.createVisit);
-router.route('/:id/').post(visitController.fetchCarerDayVisit);
-// http://127.0.0.1:1000/api/v1/visit/628208d487a56613c4d703fe?dateOfVisit= "2022-05-18"
+router.route('/add/:id').post(visitController.addServiceUserToVisit);
 router
-  // .route('/:id/')
-  // .get(visitController.fetchCarerDayVisit)
-  .post(visitController.addServiceUserToVisit);
+  .route('/:id/')
+
+  .post(visitController.fetchCarerDayVisit);
+// router.route('/:id/');
 
 module.exports = router;
+
+// router.route('/:id/search?date').post(visitController.fetchCarerDayVisit);

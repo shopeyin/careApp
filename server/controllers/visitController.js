@@ -19,10 +19,10 @@ exports.createVisit = async (req, res) => {
 };
 
 exports.addServiceUserToVisit = async (req, res) => {
-  console.log(req.body.dateOfVisit);
+   console.log('addService hit', req.body.serviceusersToVisit);
   console.log(req.body);
   try {
-    console.log('hereoo', req.body.serviceusersToVisit);
+    console.log('addService hit', req.body.serviceusersToVisit);
     const serviceUserToAdd = await Visit.findByIdAndUpdate(req.params.id, {
       $addToSet: { serviceusersToVisit: req.body.serviceusersToVisit },
 
@@ -46,7 +46,7 @@ exports.addServiceUserToVisit = async (req, res) => {
 exports.fetchCarerDayVisit = async (req, res) => {
   console.log('--------');
   console.log(req.body.dateOfVisit);
-  console.log('endpointooo hit');
+  console.log('fetchCarerDayVisit hit');
   try {
     const dayVisit = await Visit.find({
       careruser: req.params.id,

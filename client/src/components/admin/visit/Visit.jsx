@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
+const BASE_URL = "http://127.0.0.1:1000/api/v1/visit/";
 
 function Visit({ carerId, serviceUsers }) {
   const [visit, setVisit] = React.useState([]);
@@ -29,7 +29,7 @@ function Visit({ carerId, serviceUsers }) {
 
   const handleSubmit = async (visitId) => {
     await axios.post(
-      `${BASE_URL}/${visitId}`,
+      `${BASE_URL}/add/${visitId}`,
 
       updateVisitData
     );
@@ -60,7 +60,7 @@ function Visit({ carerId, serviceUsers }) {
     setShow(true);
     createVisit();
   };
-   console.log(serviceUserInfo);
+  console.log(serviceUserInfo);
   console.log("VISIT ERE", visit);
   console.log(selectedDate);
   return (

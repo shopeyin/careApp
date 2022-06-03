@@ -4,7 +4,6 @@ import { fetchAllTaskofaServiceUser } from "../admin/task/taskFunctions";
 import { addVisitInfo } from "./utils";
 import { useParams, useNavigate } from "react-router-dom";
 function ServiceUserActivities({ currentUser }) {
-  
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
   const [activities, setActivities] = useState({});
@@ -18,24 +17,27 @@ function ServiceUserActivities({ currentUser }) {
   const goToPreviousPage = () => {
     navigate(-1);
   };
-
+  let visitId = localStorage.getItem("visitId");
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted", visitNote);
-    localStorage.setItem(`visitNote ${params.id}`, visitNote);
+
+    let visitId = localStorage.getItem("visitId");
+    localStorage.setItem(`visitNoteDetails ${params.id} ${visitId} `, visitNote);
 
     addVisitInfo(data);
   };
 
   const getInitialVisitNote = () => {
-    let note = localStorage.getItem(`visitNote ${params.id}`);
-
+    let note = localStorage.getItem(`visitNoteDetails ${params.id} ${visitId} `);
+    console.log("Note ", params.id, visitId)
+    console.log("Note here oo", note)
     setVisitNote(note);
   };
 
   const getBtnStatus = () => {
-    let yesBtn = JSON.parse(localStorage.getItem("yesDISABLED"));
-    let noBtn = JSON.parse(localStorage.getItem("noDISABLED"));
+    let yesBtn = JSON.parse(localStorage.getItem(`yesDISABLED ${params.id} ${visitId}`));
+    let noBtn = JSON.parse(localStorage.getItem(`noDISABLED ${params.id} ${visitId}`));
     if (yesBtn || noBtn) {
       setYesDisabled(yesBtn);
       setNoDisabled(noBtn);
@@ -43,6 +45,7 @@ function ServiceUserActivities({ currentUser }) {
   };
 
   useEffect(() => {
+    localStorage.getItem("visitId");
     getInitialVisitNote();
     getBtnStatus();
     const fetchTask = async () => {
@@ -56,32 +59,29 @@ function ServiceUserActivities({ currentUser }) {
   }, [params.id]);
   const handleInput = (e, key) => {
     if (e.target.value === "Yes") {
-      //   console.log(typeof noDisabled);
-      //   console.log(Array.isArray(noDisabled));
       let results = noDisabled.filter((id) => id !== e.target.id);
 
       setNoDisabled(results);
 
-      localStorage.setItem("noDISABLED", JSON.stringify(results));
+      localStorage.setItem(`noDISABLED ${params.id} ${visitId}`, JSON.stringify(results));
 
       setYesDisabled([...yesDisabled, e.target.id]);
 
       localStorage.setItem(
-        "yesDISABLED",
+        `yesDISABLED ${params.id} ${visitId}`,
         JSON.stringify([...yesDisabled, e.target.id])
       );
     } else {
-     
       let results = yesDisabled.filter((id) => id !== e.target.id);
 
       setYesDisabled(results);
 
-      localStorage.setItem("yesDISABLED", JSON.stringify(results));
+      localStorage.setItem(`yesDISABLED ${params.id} ${visitId}`, JSON.stringify(results));
 
       setNoDisabled([...noDisabled, e.target.id]);
 
       localStorage.setItem(
-        "noDISABLED",
+        `noDISABLED ${params.id} ${visitId}`,
         JSON.stringify([...noDisabled, e.target.id])
       );
     }
@@ -93,11 +93,9 @@ function ServiceUserActivities({ currentUser }) {
     visitNote: visitNote,
     carerid: currentUser._id,
     serviceuserid: params.id,
-   
-    activities,
-    
-  };
 
+    activities,
+  };
   return (
     <div>
       <button onClick={goToPreviousPage}>Go back</button>

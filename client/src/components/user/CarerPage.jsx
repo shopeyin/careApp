@@ -9,7 +9,9 @@ const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [loaded, setLoaded] = useState(false);
+
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -19,45 +21,67 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     fetchUserData();
   }, [fetchUserData, navigate]);
 
-  let data = {
-    dateOfVisit: "2022-05-21T23:00:00.000+00:00",
+  let visitDate = {
+    dateOfVisit:
+      format(new Date(selectedDate), "yyyy-MM-dd") + "T00:00:00.000+00:00",
   };
-  let newSelectedDate = format(new Date(selectedDate), "yyyy-MM-dd");
-  let concate = newSelectedDate + "T00:00:00.000+00:00";
-  console.log(concate);
-  console.log(format(new Date(selectedDate), "yyyy-MM-dd"));
+
+ 
 
   useEffect(() => {
-    console.log("called  effectoo");
+   
     if (currentUser) {
       const fetchVisit = async () => {
         try {
           console.log("called data");
-          const visitData = await axios.post(`${BASE_URL}/${currentUser._id}`, {
-            dateOfVisit:
-              format(new Date(selectedDate), "yyyy-MM-dd") +
-              "T00:00:00.000+00:00",
-          });
+          const visitData = await axios.post(
+            `${BASE_URL}/${currentUser._id}`,
+            visitDate
+          );
           const {
             data: {
               data: { visit },
             },
           } = visitData;
-          console.log(visit[0].serviceusersToVisit);
-          setServiceUsersVisit(visit[0].serviceusersToVisit);
+          console.log(visit[0]);
+          console.log(visit[0]._id);
+          localStorage.setItem('visitId',visit[0]._id )
+          if (!visit[0]) {
+            setServiceUsersVisit([]);
+          } else {
+            setServiceUsersVisit(visit[0].serviceusersToVisit);
+            
+          }
+         
         } catch (err) {
           console.log(err);
         }
       };
       fetchVisit();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, selectedDate]);
+
+  console.log(serviceUsersVisit);
 
   const logOut = () => {
     localStorage.removeItem("Authtoken");
     logOutUser();
     navigate("/");
   };
+  let itemsToRender;
+  if (serviceUsersVisit) {
+    itemsToRender = serviceUsersVisit.map((serviceUser) => {
+      return (
+        <div key={serviceUser._id}>
+          <Link to={`activities/${serviceUser._id}`}>
+            {" "}
+            {serviceUser.name} {serviceUser._id}
+          </Link>{" "}
+        </div>
+      );
+    });
+  }
 
   return (
     <div>
@@ -74,16 +98,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
         showYearDropdown
         scrollableMonthYearDropdown
       />
-      {serviceUsersVisit.map((serviceUser) => {
-        return (
-          <div key={serviceUser._id}>
-            <Link to={`activities/${serviceUser._id}`}>
-              {" "}
-              {serviceUser.name} {serviceUser._id}
-            </Link>{" "}
-          </div>
-        );
-      })}
+      {serviceUsersVisit && loaded && serviceUsersVisit.length  ? itemsToRender : "no vists"}
     </div>
   );
 }
