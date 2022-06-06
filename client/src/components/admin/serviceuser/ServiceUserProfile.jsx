@@ -7,6 +7,7 @@ function ServiceUserProfile() {
   const [tasks, setTasks] = useState([]);
   const [hideTaskToggle, setHideTaskTooggle] = useState(false);
   const [reloadData, setReloadData] = useState(false);
+
   const params = useParams();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function ServiceUserProfile() {
 
       console.log("fetchTaskcalled");
     };
+    console.log("fetch task compoonent");
     fetchTask();
   }, [params.id, reloadData]);
 
@@ -34,9 +36,8 @@ function ServiceUserProfile() {
   };
   const remountComponent = () => {
     setReloadData(!reloadData);
-   
   };
-  
+
   return (
     <div>
       <h3>Service users</h3>
@@ -47,7 +48,11 @@ function ServiceUserProfile() {
       <h5>List of Service user activities/Task</h5>
       <button onClick={taskToggle}>Add task</button>
       {hideTaskToggle ? (
-        <Task serviceuserId={serviceuser._id} taskToggle={taskToggle} remountComponent={remountComponent} />
+        <Task
+          serviceuserId={serviceuser._id}
+          taskToggle={taskToggle}
+          remountComponent={remountComponent}
+        />
       ) : (
         ""
       )}

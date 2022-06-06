@@ -10,7 +10,6 @@ const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [loaded, setLoaded] = useState(false);
 
 
   let navigate = useNavigate();
@@ -33,7 +32,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     if (currentUser) {
       const fetchVisit = async () => {
         try {
-          console.log("called data");
+          
           const visitData = await axios.post(
             `${BASE_URL}/${currentUser._id}`,
             visitDate
@@ -46,14 +45,13 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
           console.log(visit[0]);
           console.log(visit[0]._id);
           localStorage.setItem('visitId',visit[0]._id )
-          if (!visit[0]) {
-            setServiceUsersVisit([]);
-          } else {
-            setServiceUsersVisit(visit[0].serviceusersToVisit);
-            
-          }
+          console.log("success calleddddddddd")
+
+          setServiceUsersVisit(visit[0].serviceusersToVisit);
          
         } catch (err) {
+          console.log("error called")
+          setServiceUsersVisit([]);
           console.log(err);
         }
       };
@@ -98,7 +96,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
         showYearDropdown
         scrollableMonthYearDropdown
       />
-      {serviceUsersVisit && loaded && serviceUsersVisit.length  ? itemsToRender : "no vists"}
+      {serviceUsersVisit &&  serviceUsersVisit.length  ? itemsToRender : "no vists"}
     </div>
   );
 }
