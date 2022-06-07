@@ -1,3 +1,24 @@
+.container-fluid{
+    &__box{
+     min-height: 100vh;
+    }
+    &__menu{
+        background-color: yellow;
+
+        &-adminName{
+            background-color: green;
+            min-height: 15%
+        }
+        &-logOutBtn{
+            min-height: 50%;
+        }
+    }
+
+    &__page{
+        
+    }
+}
+
 .b{
     border:1px solid black;
 }
@@ -15,10 +36,10 @@ border-radius: 5px;
 &--box{
     color:brown;
     
-    margin: 4rem;
+    margin: 2rem;
     min-height: 80vh;
-    background: rgb(255,255,255);
-    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(191,214,214,1) 91%, rgba(190,214,214,1) 98%);
+    background: red;
+    
     border-radius: 5px;
     
 }

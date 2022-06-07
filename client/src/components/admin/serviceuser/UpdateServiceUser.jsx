@@ -45,7 +45,7 @@ function UpdateServiceUser() {
   };
 
   return (
-    <div>
+    <div className="col-md-5">
       Update Service User{" "}
       <form onSubmit={handleSubmit}>
         {" "}

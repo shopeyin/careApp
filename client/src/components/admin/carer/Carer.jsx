@@ -9,9 +9,10 @@ function Carer({ carers }) {
   if (carers) {
     itemsToRender = carers.map((carer) => {
       return (
-        <div key={carer._id}>
-          <Link to={`profile/${carer._id}`}>{carer.name} </Link> {carer._id}
-          {carer.name}
+        <div key={carer._id} className="card m-2" style={{ width: "30rem" }}>
+          <div className="card-body text-center">
+            <Link to={`profile/${carer._id}`}>{carer.name} </Link>
+          </div>
         </div>
       );
     });
@@ -20,8 +21,11 @@ function Carer({ carers }) {
   }
   return (
     <div>
+      <Link to="add-carer" className="ml-2 mt-1">
+        Add Carer
+      </Link>
+
       {itemsToRender}
-      <Link to="add-carer">Add Carer</Link>
     </div>
   );
 }

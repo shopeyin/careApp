@@ -28,8 +28,8 @@ function CreateServiceUser({ createNewServiceUser }) {
   };
 
   return (
-    <div>
-      <button onClick={goToPreviousPage}>Go back</button>
+    
+    <div className="col-md-5">
       <form onSubmit={handleSubmit}>
         {" "}
         <div className="form-group">

@@ -61,6 +61,7 @@ html {
 
   @include respond(tab-port) {
     // 1rem = 8px , 8/16 =50% width<900
+  
     font-size: 50%;
   }
 
@@ -76,8 +77,9 @@ body {
   line-height: 1.7;
   box-sizing: border-box;
   font-size: 1.5rem;
-  padding: 1rem;
-
+  min-height: 95vh;
+  
+  
   @include respond(tab-port) {
     // 1rem = 8px , 8/16 =50% width<900
     padding: 0;

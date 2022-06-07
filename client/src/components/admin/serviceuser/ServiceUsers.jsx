@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -33,17 +34,21 @@ function ServiceUsers({
   if (serviceUsers) {
     itemsToRender = serviceUsers.map((serviceuser) => {
       return (
-        <div key={serviceuser._id}>
-          <Link to={`profile/${serviceuser._id}`}>{serviceuser._id}</Link> ||{" "}
-          {serviceuser.name} and {serviceuser.address}
-          <Link to={`edit/${serviceuser._id}`}>Edit Service Users</Link>
-          <button
+        <div
+          className="col-sm-6 col-md-3 d-flex  justify-content-between b"
+          style={{color:"black"}}
+          key={serviceuser._id}
+        >
+          <Link to={`profile/${serviceuser._id}`}> {serviceuser.name}</Link>
+          <Link to={`edit/${serviceuser._id}`}>
+            <i class="fa-solid fa-pen"></i>
+          </Link>
+          <i
+            className="fa-solid fa-trash-can mt-2"
             onClick={() => {
               handleDelete(serviceuser._id);
             }}
-          >
-            Delete
-          </button>
+          ></i>
         </div>
       );
     });
@@ -52,9 +57,9 @@ function ServiceUsers({
   }
 
   return (
-    <div>
+    <div style={{color:"black"}}>
+      <Link to="add-serviceuser">Add Service User</Link>
       {itemsToRender}
-      <Link to="add-serviceuser">Add Service Users</Link>
     </div>
   );
 }
