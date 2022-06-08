@@ -9,6 +9,7 @@ import ServiceUserProfile from "./../serviceuser/ServiceUserProfile";
 import Carer from "./../carer/Carer";
 import AddCarer from "./../carer/AddCarer";
 import CarerProfile from "./../carer/CarerProfile";
+import Navigation from "./../navigation/Navigation";
 import { fetchCarers } from "../../../redux/carer/carer-action";
 import { fetchServiceUsers } from "../../../redux/serviceUser/serviceuser-action";
 import "./adminhomepage.style.scss";
@@ -27,6 +28,7 @@ function AdminHomePage({ fetchCarers, fetchServiceUsers }) {
   }, [fetchCarers, fetchServiceUsers]);
   return (
     <div className="container-fluid">
+      <Navigation />
       <div className="row container-fluid__box b">
         <div className="col-sm-2 container-fluid__menu b ">
           <div className="row container-fluid__menu-adminName d-flex align-items-end justify-content-center b ">
@@ -45,10 +47,11 @@ function AdminHomePage({ fetchCarers, fetchServiceUsers }) {
             Log Out
           </div>
         </div>
-        <div className="col-sm-10 container-fluid__page  b">
+        <div className="col-sm-10  container-fluid__page  b">
           <div
             className="row b d-flex align-items-end justify-content-center"
             style={{ minHeight: "15%" }}
+            id="homebar"
           >
             <div class="col">
               <button onClick={goToPreviousPage} className="m-1">

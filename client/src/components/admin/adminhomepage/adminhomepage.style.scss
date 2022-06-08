@@ -5,6 +5,15 @@
     &__menu{
         background-color: yellow;
 
+       
+
+        
+
+         @media screen and (max-width : 575px) {
+               display: none;
+               }
+    
+
         &-adminName{
             background-color: green;
             min-height: 15%
@@ -15,7 +24,16 @@
     }
 
     &__page{
-        
+      
+
+       #homebar{
+       
+        @media screen and (max-width : 575px) {
+            display: none !important;
+           
+            }
+           
+       }
     }
 }
 
@@ -25,22 +43,10 @@
 .r{
     border:1px solid black;
 }
-.adminHomepage{
-    min-height: 96vh;
-    color:red;
-   
-background: rgb(63,94,251);
-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(190,214,214,1) 100%);
-border-radius: 5px;
 
-&--box{
-    color:brown;
+
+// #homebar{
     
-    margin: 2rem;
-    min-height: 80vh;
-    background: red;
-    
-    border-radius: 5px;
-    
-}
-}
+//     display: none !important;
+//     color:yellow;
+// }

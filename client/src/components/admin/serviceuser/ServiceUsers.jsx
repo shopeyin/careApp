@@ -34,13 +34,17 @@ function ServiceUsers({
   if (serviceUsers) {
     itemsToRender = serviceUsers.map((serviceuser) => {
       return (
+        
         <div
-          className="col-sm-6 col-md-3 d-flex  justify-content-between b"
-          style={{color:"black"}}
+          className="card m-2"
+          style={{ width: "30rem", height: "3.5rem" }}
           key={serviceuser._id}
         >
           <Link to={`profile/${serviceuser._id}`}> {serviceuser.name}</Link>
-          <Link to={`edit/${serviceuser._id}`}>
+          <Link
+            to={`edit/${serviceuser._id}`}
+            style={{ position: "relative", top: "-2.5rem", left: "15rem" }}
+          >
             <i class="fa-solid fa-pen"></i>
           </Link>
           <i
@@ -48,6 +52,7 @@ function ServiceUsers({
             onClick={() => {
               handleDelete(serviceuser._id);
             }}
+            style={{ position: "relative", top: "-5rem", left: "25rem" }}
           ></i>
         </div>
       );
@@ -57,9 +62,11 @@ function ServiceUsers({
   }
 
   return (
-    <div style={{color:"black"}}>
-      <Link to="add-serviceuser">Add Service User</Link>
-      {itemsToRender}
+    <div className="row d-flex align-items-center " style={{ height: "45%" }}>
+      <div className="col-md-6 ">
+        <Link to="add-serviceuser">Add Service User</Link>
+        {itemsToRender}
+      </div>
     </div>
   );
 }

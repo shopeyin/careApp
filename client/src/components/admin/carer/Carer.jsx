@@ -20,12 +20,14 @@ function Carer({ carers }) {
     itemsToRender = "Loading...";
   }
   return (
-    <div>
-      <Link to="add-carer" className="ml-2 mt-1">
-        Add Carer
-      </Link>
+    <div className="row d-flex align-items-center b "  style={{ height: "45%" }}>
+      <div className="col-md-6 b">
+        <Link to="add-carer" className="ml-2 mt-1">
+          Add Carer
+        </Link>
 
-      {itemsToRender}
+        {itemsToRender}
+      </div>
     </div>
   );
 }

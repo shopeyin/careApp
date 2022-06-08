@@ -39,27 +39,26 @@ function ServiceUserProfile() {
   };
 
   return (
-    <div>
-      <h3>Service users</h3>
-      <p>
-        name: {serviceuser.name} {serviceuser._id}
-      </p>{" "}
-      <p>address: {serviceuser.address}</p>
-      <h5>List of Service user activities/Task</h5>
-      <button onClick={taskToggle}>Add task</button>
-      {hideTaskToggle ? (
-        <Task
-          serviceuserId={serviceuser._id}
-          taskToggle={taskToggle}
-          remountComponent={remountComponent}
-        />
-      ) : (
-        ""
-      )}
-      <h3>All serviceUser task/activities</h3>
-      {tasks.map((task) => {
-        return <div key={task._id}>{task.nameOfTask}</div>;
-      })}
+    <div className="row d-flex align-items-center " style={{ height: "45%" }}>
+      <div className="col-md-6">
+        <h3>Service users</h3>
+        <p>name: {serviceuser.name}</p> <p>address: {serviceuser.address}</p>
+        <h5>List of Service user activities/Task</h5>
+        <button onClick={taskToggle}>Add task</button>
+        {hideTaskToggle ? (
+          <Task
+            serviceuserId={serviceuser._id}
+            taskToggle={taskToggle}
+            remountComponent={remountComponent}
+          />
+        ) : (
+          ""
+        )}
+        <h3>All serviceUser task/activities</h3>
+        {tasks.map((task) => {
+          return <div key={task._id}>{task.nameOfTask}</div>;
+        })}
+      </div>
     </div>
   );
 }
