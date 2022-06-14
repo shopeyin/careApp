@@ -37,60 +37,22 @@ class Navigation extends React.Component {
                   <li className="navigation__item">
                     <NavLink
                       className="navigation__link"
-                      to="/"
+                      to="/admin"
                       onClick={() => this.unCheck(i)}
                     >
                       <span>01</span>
                       Home
                     </NavLink>
                   </li>
-                  {currentUser ? (
-                    <li className="navigation__item">
-                      <Link
-                        className="navigation__link"
-                        to="/login"
-                        onClick={() => {
-                          this.unCheck(i);
-                          signOutStart();
-                        }}
-                      >
-                        <span>02</span>
-                        LOGOUT <br />
-                        {currentUser.displayName}
-                      </Link>
-                    </li>
-                  ) : (
-                    <div>
-                      <li className="navigation__item">
-                        <Link
-                          className="navigation__link"
-                          to="/login"
-                          onClick={() => this.unCheck(i)}
-                        >
-                          <span>02</span>
-                          LOGIN
-                        </Link>
-                      </li>
-
-                      <li className="navigation__item">
-                        <Link
-                          className="navigation__link"
-                          to="/signup"
-                          onClick={() => this.unCheck(i)}
-                        >
-                          <span>03</span>
-                          SIGNUP
-                        </Link>
-                      </li>
-                    </div>
-                  )}
+                
+                
                   <li className="navigation__item">
                     <Link
                       className="navigation__link"
                       onClick={() => this.unCheck(i)}
                       to="carers"
                     >
-                      <span>04</span>
+                      
                       Carers
                     </Link>
                   </li>
@@ -100,20 +62,11 @@ class Navigation extends React.Component {
                       onClick={() => this.unCheck(i)}
                       to="serviceusers"
                     >
-                      <span>05</span>
+                     
                       Service Users
                     </Link>
                   </li>
-                  <li className="navigation__item">
-                    <Link
-                      className="navigation__link"
-                      onClick={() => this.unCheck(i)}
-                      to=""
-                    >
-                      <span>06</span>
-                      LOGOUT
-                    </Link>
-                  </li>
+                 
                 </ul>
               </nav>
             </div>

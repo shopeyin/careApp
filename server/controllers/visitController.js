@@ -19,7 +19,7 @@ exports.createVisit = async (req, res) => {
 };
 
 exports.addServiceUserToVisit = async (req, res) => {
-   console.log('addService hit', req.body.serviceusersToVisit);
+  console.log('addService hit', req.body.serviceusersToVisit);
   console.log(req.body);
   try {
     console.log('addService hit', req.body.serviceusersToVisit);
@@ -44,13 +44,10 @@ exports.addServiceUserToVisit = async (req, res) => {
 };
 
 exports.fetchCarerDayVisit = async (req, res) => {
-  console.log('--------');
-  console.log(req.body.dateOfVisit);
-  console.log('fetchCarerDayVisit hit');
   try {
     const dayVisit = await Visit.find({
       careruser: req.params.id,
-       dateOfVisit: req.body.dateOfVisit,
+      dateOfVisit: req.body.dateOfVisit,
     })
       .populate('serviceusersToVisit')
       .exec();
@@ -65,6 +62,43 @@ exports.fetchCarerDayVisit = async (req, res) => {
     res.status(400).json({
       status: 'fail',
       message: err.message,
+    });
+  }
+};
+
+exports.fetchAllCarerVisit = async (req, res) => {
+  try {
+    const carerVisit = await Visit.find({
+      careruser: req.params.id,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        visit: carerVisit,
+        visitLength: carerVisit.length,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
+exports.deleteCarerVisit = async (req, res) => {
+  try {
+    await Visit.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: 'success',
+
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
     });
   }
 };

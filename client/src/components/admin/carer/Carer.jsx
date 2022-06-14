@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams, Outlet } from "react-router-dom";
 import { fetchCarers } from "../../../redux/carer/carer-action";
 import { reMount } from "../../../../src/redux/remount/remount-action";
 
@@ -11,7 +11,7 @@ function Carer({ carers }) {
       return (
         <div key={carer._id} className="card m-2" style={{ width: "30rem" }}>
           <div className="card-body text-center">
-            <Link to={`profile/${carer._id}`}>{carer.name} </Link>
+            <Link to={`${carer._id}`}>{carer.name} </Link>
           </div>
         </div>
       );
@@ -20,13 +20,14 @@ function Carer({ carers }) {
     itemsToRender = "Loading...";
   }
   return (
-    <div className="row d-flex align-items-center b "  style={{ height: "45%" }}>
-      <div className="col-md-6 b">
+    <div className="row d-flex align-items-center inneradminpage">
+      <div className="col-md-6">
         <Link to="add-carer" className="ml-2 mt-1">
           Add Carer
         </Link>
 
         {itemsToRender}
+        <Outlet />
       </div>
     </div>
   );

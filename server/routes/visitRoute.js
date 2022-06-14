@@ -6,9 +6,9 @@ router.route('/').post(visitController.createVisit);
 router.route('/add/:id').post(visitController.addServiceUserToVisit);
 router
   .route('/:id/')
-
-  .post(visitController.fetchCarerDayVisit);
-// router.route('/:id/');
+  .get(visitController.fetchAllCarerVisit)
+  .post(visitController.fetchCarerDayVisit)
+  .delete(visitController.deleteCarerVisit);
 
 module.exports = router;
 

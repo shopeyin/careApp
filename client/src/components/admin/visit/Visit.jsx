@@ -9,7 +9,7 @@ import axios from "axios";
 
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit/";
 
-function Visit({ carerId, serviceUsers }) {
+function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
   const [visit, setVisit] = React.useState([]);
 
   const [show, setShow] = React.useState(false);
@@ -34,7 +34,7 @@ function Visit({ carerId, serviceUsers }) {
       updateVisitData
     );
     console.log(updateVisitData);
-    // console.log(addDays(new Date(), 1));
+    reMountComponent();
   };
 
   const createVisit = async () => {
@@ -63,6 +63,7 @@ function Visit({ carerId, serviceUsers }) {
   console.log(serviceUserInfo);
   console.log("VISIT ERE", visit);
   console.log(selectedDate);
+  console.log("visit mounted");
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -76,7 +77,7 @@ function Visit({ carerId, serviceUsers }) {
         size="lg"
         backdrop="static"
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Modal heading {visit ? visit._id : ""} </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -116,7 +117,13 @@ function Visit({ carerId, serviceUsers }) {
           })}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleDeleteVisit(visit._id);
+              handleClose();
+            }}
+          >
             Close
           </Button>
           <Button

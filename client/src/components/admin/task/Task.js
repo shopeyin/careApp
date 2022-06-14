@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { addTaskToUser } from "./taskFunctions";
 function Task({ serviceuserId, taskToggle, remountComponent }) {
@@ -8,13 +8,12 @@ function Task({ serviceuserId, taskToggle, remountComponent }) {
  
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(taskName);
+    e.preventDefault();  
     const data = {
       nameOfTask: taskName,
     };
 
-    addTaskToUser(serviceuserId, data);
+   await addTaskToUser(serviceuserId, data);
     setTaskName("");
     remountComponent();
     taskToggle();

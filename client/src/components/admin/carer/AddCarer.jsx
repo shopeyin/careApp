@@ -31,7 +31,8 @@ function AddCarer({ createNewCarer, fetchCarers }) {
     console.log('submitttingggg')
   };
   return (
-    <div>
+    <div className="row d-flex align-items-center inneradminpage ">
+      <div className="col-md-5">
       <form onSubmit={handleSubmit}>
         {" "}
         <div className="form-group">
@@ -80,6 +81,8 @@ function AddCarer({ createNewCarer, fetchCarers }) {
           Submit
         </button>
       </form>
+        </div>
+    
     </div>
   );
 }
