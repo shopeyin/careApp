@@ -45,6 +45,7 @@ function CarerProfile() {
           data: { data },
         } = carerVisit;
         console.log(data);
+
         setVisits(data);
       } catch (error) {
         console.log(error);
@@ -72,7 +73,11 @@ function CarerProfile() {
           visits.visit.map((item) => {
             return (
               <div key={item._id}>
-                {item.dateOfVisit}-- visit id-- {item.serviceusersToVisit}--
+                <p> Visit Id - {item._id}</p>
+                <p>Date of Visit- {item.dateOfVisit}</p> Service users Id -{" "}
+                {item.serviceusersToVisit.map((i, index) => {
+                  return <p key={index}>{i}</p>;
+                })}{" "}
                 <button
                   onClick={() => {
                     handleDeleteVisit(item._id);
@@ -81,7 +86,10 @@ function CarerProfile() {
                   Delete
                 </button>
                 <button>Edit</button>
-                <EditVisit />
+                <EditVisit
+                  visitId={item._id}
+                  serviceUsersToVisitId={item.serviceusersToVisit}
+                />
                 <br></br>
               </div>
             );

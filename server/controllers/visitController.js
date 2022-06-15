@@ -19,10 +19,7 @@ exports.createVisit = async (req, res) => {
 };
 
 exports.addServiceUserToVisit = async (req, res) => {
-  console.log('addService hit', req.body.serviceusersToVisit);
-  console.log(req.body);
   try {
-    console.log('addService hit', req.body.serviceusersToVisit);
     const serviceUserToAdd = await Visit.findByIdAndUpdate(req.params.id, {
       $addToSet: { serviceusersToVisit: req.body.serviceusersToVisit },
 

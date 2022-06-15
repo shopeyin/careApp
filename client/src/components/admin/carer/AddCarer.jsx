@@ -28,7 +28,6 @@ function AddCarer({ createNewCarer, fetchCarers }) {
     createNewCarer(data, fetchCarers);
 
     goToPreviousPage();
-    console.log('submitttingggg')
   };
   return (
     <div className="row d-flex align-items-center inneradminpage ">

@@ -62,8 +62,7 @@ function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
   };
   console.log(serviceUserInfo);
   console.log("VISIT ERE", visit);
-  console.log(selectedDate);
-  console.log("visit mounted");
+ 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
