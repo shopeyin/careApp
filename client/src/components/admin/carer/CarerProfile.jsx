@@ -1,13 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
+
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Visit from "../visit/Visit";
-import EditVisit from "../visit/EditVisit";
+import AddServiceUserToVisit from "../visit/AddServiceUserToVisit";
+import DeleteServiceUserFromVisit from "../visit/DeleteServiceUserFromVisit";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
 const URL = "http://127.0.0.1:1000/api/v1/visit";
 
-function CarerProfile() {
+function CarerProfile({ serviceUsers }) {
   const [visits, setVisits] = React.useState([]);
   const [reload, setReload] = React.useState(false);
 
@@ -37,6 +41,7 @@ function CarerProfile() {
   };
 
   React.useEffect(() => {
+    console.log("  carer profilke mounting");
     const fetchAllCarerVisits = async () => {
       try {
         const carerVisit = await axios.get(`${URL}/${params.carerId}`);
@@ -73,7 +78,7 @@ function CarerProfile() {
           visits.visit.map((item) => {
             return (
               <div key={item._id}>
-                <p> Visit Id - {item._id}</p>
+                <Link to={`visit/${item._id}`}>Visit Id - {item._id} </Link>
                 <p>Date of Visit- {item.dateOfVisit}</p> Service users Id -{" "}
                 {item.serviceusersToVisit.map((i, index) => {
                   return <p key={index}>{i}</p>;
@@ -85,11 +90,19 @@ function CarerProfile() {
                 >
                   Delete
                 </button>
-                <button>Edit</button>
-                <EditVisit
+                <AddServiceUserToVisit
+                  serviceUsers={serviceUsers}
+                  visitId={item._id}
+                  dateOfVisit={item.dateOfVisit}
+                  reMountComponent={reMountComponent}
+                />
+                <DeleteServiceUserFromVisit
+                  serviceUsers={serviceUsers}
                   visitId={item._id}
                   serviceUsersToVisitId={item.serviceusersToVisit}
+                  reMountComponent={reMountComponent}
                 />
+              
                 <br></br>
               </div>
             );
@@ -98,5 +111,9 @@ function CarerProfile() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  serviceUsers: state.serviceUsers.serviceUsers,
+});
+// Connect Redux to React
 
-export default CarerProfile;
+export default connect(mapStateToProps)(CarerProfile);

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, useParams, Outlet } from "react-router-dom";
+import { Link,  Outlet } from "react-router-dom";
 import { fetchCarers } from "../../../redux/carer/carer-action";
 import { reMount } from "../../../../src/redux/remount/remount-action";
 

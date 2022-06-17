@@ -19,6 +19,7 @@ exports.createVisit = async (req, res) => {
 };
 
 exports.addServiceUserToVisit = async (req, res) => {
+  console.log("add rout called")
   try {
     const serviceUserToAdd = await Visit.findByIdAndUpdate(req.params.id, {
       $addToSet: { serviceusersToVisit: req.body.serviceusersToVisit },
@@ -31,6 +32,27 @@ exports.addServiceUserToVisit = async (req, res) => {
       data: {
         visit: serviceUserToAdd,
       },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
+};
+
+exports.deleteServiceUserFromVisit = async (req, res) => {
+
+  console.log("Delete rout called")
+  try {
+    await Visit.findByIdAndUpdate(req.params.id, {
+      $pull: { serviceusersToVisit: req.body.serviceusersToVisit },
+    });
+
+    res.status(204).json({
+      status: 'success',
+
+      data: null,
     });
   } catch (err) {
     res.status(400).json({
