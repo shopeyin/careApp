@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'please provide a valid email'],
   },
+
+  barePassword: {
+    type: String,
+  },
+
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -34,8 +39,14 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 
+  role: {
+    type: String,
+    enum: ['carer', 'admin'],
+    default: 'carer',
+  },
+
   createdAt: {
-    type:  Date,
+    type: Date,
     default: Date.now(),
     select: false,
   },

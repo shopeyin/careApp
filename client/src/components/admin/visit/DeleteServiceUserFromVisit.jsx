@@ -21,13 +21,11 @@ function DeleteServiceUserFromVisit({
     setShow(true);
   };
 
-  
-
   const handleSubmit = async (visitId, serviceUserId) => {
     await axios.post(`${BASE_URL}/delete/${visitId}`, {
       serviceusersToVisit: serviceUserId,
     });
-    console.log("submitteddd");
+   
   };
 
   function filterServiceUsers(arr) {
@@ -41,8 +39,8 @@ function DeleteServiceUserFromVisit({
         .filter((j) => {
           return j._id === arr[index];
         })
-        .map((m) => {
-          return newArray.push({ name: m.name, id: m._id });
+        .map((serviceuser) => {
+          return newArray.push({ name: serviceuser.name, id: serviceuser._id });
         });
     }
 

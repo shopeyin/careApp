@@ -9,6 +9,7 @@ function AddCarer({ createNewCarer, fetchCarers }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const navigate = useNavigate();
   const goToPreviousPage = () => {
@@ -23,6 +24,8 @@ function AddCarer({ createNewCarer, fetchCarers }) {
       email,
       password,
       confirmPassword,
+      barePassword: password,
+      role,
     };
 
     createNewCarer(data, fetchCarers);
@@ -32,56 +35,67 @@ function AddCarer({ createNewCarer, fetchCarers }) {
   return (
     <div className="row d-flex align-items-center inneradminpage ">
       <div className="col-md-5">
-      <form onSubmit={handleSubmit}>
-        {" "}
-        <div className="form-group">
-          <label htmlFor="exampleInputTitle"> Name</label>
-          <input
-            type="text"
-            className="form-control"
-            aria-describedby="TitleHelp"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            value={name}
-          />
-          <label htmlFor="exampleInputTitle">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-            aria-describedby="TitleHelp"
-          />
-          <label htmlFor="exampleInputTitle">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            value={password}
-            aria-describedby="TitleHelp"
-          />
-          <label htmlFor="exampleInputTitle">Confirm Password</label>
-          <input
-            type="password"
-            className="form-control"
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-            }}
-            value={confirmPassword}
-            aria-describedby="TitleHelp"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-        </div>
-    
+        <form onSubmit={handleSubmit}>
+          {" "}
+          <div className="form-group">
+            <label htmlFor="exampleInputTitle"> Name {role}</label>
+            <input
+              type="text"
+              className="form-control"
+              aria-describedby="TitleHelp"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
+            />
+            <label htmlFor="exampleInputTitle">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
+              aria-describedby="TitleHelp"
+            />
+            <select
+              value={role}
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                setRole(e.target.value);
+              }}
+            >
+              <option selected>Choose role</option>
+              <option value="carer">Carer</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label htmlFor="exampleInputTitle">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value={password}
+              aria-describedby="TitleHelp"
+            />
+            <label htmlFor="exampleInputTitle">Confirm Password</label>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+              value={confirmPassword}
+              aria-describedby="TitleHelp"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ exports.createVisit = async (req, res) => {
 };
 
 exports.addServiceUserToVisit = async (req, res) => {
-  console.log("add rout called")
+  
   try {
     const serviceUserToAdd = await Visit.findByIdAndUpdate(req.params.id, {
       $addToSet: { serviceusersToVisit: req.body.serviceusersToVisit },

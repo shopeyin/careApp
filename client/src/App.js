@@ -1,36 +1,62 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { connect } from "react-redux";
 import AdminHomePage from "./components/admin/adminhomepage/AdminHomePage";
-import AdminLogin from "./components/admin/adminlogin/AdminLogin";
-import ServiceUsers from "./components/admin/serviceuser/ServiceUsers";
-import ServiceUserProfile from "./components/admin/serviceuser/ServiceUserProfile";
-import Carer from "./components/admin/carer/Carer";
-import CarerProfile from "./components/admin/carer/CarerProfile";
-import HomePage from "./components/homepage/HomePage";
+import ProtectedRoute from "./components/user/ProtectedRoute";
 import ServiceUserActivities from "./components/user/ServiceUserActivities";
+import CarerPage from "./components/user/CarerPage";
+import SignIn from "./components/user/SignIn";
+import Navbar from "./components/admin/navigation/Navbar";
+
 import "./App.scss";
-function App() {
+function App({ currentUser }) {
   return (
-    // <div className="App">
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route path="admin/*" element={<AdminHomePage />} />
-    //       {/* <Route path="/admin" element={<AdminHomePage />} /> */}
-    //       <Route path="/" element={<HomePage />} />
-    //       <Route path="activities/:id" element={<ServiceUserActivities />} />
-    //       <Route path="admin/login" element={<AdminLogin />} />
-    //     </Routes>
-    //   </BrowserRouter>{" "}
-    // </div>
     <div className="App">
+      <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="admin/*" element={<AdminHomePage />}></Route>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute isAllowed={!!currentUser} redirectPath="/signin">
+                {" "}
+                <CarerPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="activities/:id"
+            element={
+              <ProtectedRoute isAllowed={!!currentUser} redirectPath="/signin">
+                {" "}
+                <ServiceUserActivities />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="admin/*"
+            element={
+              <ProtectedRoute
+                isAllowed={!!currentUser && currentUser.role === "admin"}
+                redirectPath="/signin"
+              >
+                {" "}
+                <AdminHomePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="signin" element={<SignIn />} />
         </Routes>
-      </BrowserRouter>{" "}
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    loading: state.carers.loading,
+    currentUser: state.user.currentUser,
+  };
+};
+export default connect(mapStateToProps)(App);

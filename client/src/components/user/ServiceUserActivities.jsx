@@ -23,21 +23,30 @@ function ServiceUserActivities({ currentUser }) {
     console.log("submitted", visitNote);
 
     let visitId = localStorage.getItem("visitId");
-    localStorage.setItem(`visitNoteDetails ${params.id} ${visitId} `, visitNote);
+    localStorage.setItem(
+      `visitNoteDetails ${params.id} ${visitId} `,
+      visitNote
+    );
 
     addVisitInfo(data);
   };
 
   const getInitialVisitNote = () => {
-    let note = localStorage.getItem(`visitNoteDetails ${params.id} ${visitId} `);
-    console.log("Note ", params.id, visitId)
-    console.log("Note here oo", note)
+    let note = localStorage.getItem(
+      `visitNoteDetails ${params.id} ${visitId} `
+    );
+    console.log("Note ", params.id, visitId);
+    console.log("Note here oo", note);
     setVisitNote(note);
   };
 
   const getBtnStatus = () => {
-    let yesBtn = JSON.parse(localStorage.getItem(`yesDISABLED ${params.id} ${visitId}`));
-    let noBtn = JSON.parse(localStorage.getItem(`noDISABLED ${params.id} ${visitId}`));
+    let yesBtn = JSON.parse(
+      localStorage.getItem(`yesDISABLED ${params.id} ${visitId}`)
+    );
+    let noBtn = JSON.parse(
+      localStorage.getItem(`noDISABLED ${params.id} ${visitId}`)
+    );
     if (yesBtn || noBtn) {
       setYesDisabled(yesBtn);
       setNoDisabled(noBtn);
@@ -63,7 +72,10 @@ function ServiceUserActivities({ currentUser }) {
 
       setNoDisabled(results);
 
-      localStorage.setItem(`noDISABLED ${params.id} ${visitId}`, JSON.stringify(results));
+      localStorage.setItem(
+        `noDISABLED ${params.id} ${visitId}`,
+        JSON.stringify(results)
+      );
 
       setYesDisabled([...yesDisabled, e.target.id]);
 
@@ -76,7 +88,10 @@ function ServiceUserActivities({ currentUser }) {
 
       setYesDisabled(results);
 
-      localStorage.setItem(`yesDISABLED ${params.id} ${visitId}`, JSON.stringify(results));
+      localStorage.setItem(
+        `yesDISABLED ${params.id} ${visitId}`,
+        JSON.stringify(results)
+      );
 
       setNoDisabled([...noDisabled, e.target.id]);
 
@@ -97,26 +112,39 @@ function ServiceUserActivities({ currentUser }) {
     activities,
   };
   return (
-    <div>
-      <button onClick={goToPreviousPage}>Go back</button>
-      ServiceUserActivities{" "}
-      <form onSubmit={handleSubmit}>
-        {" "}
-        <div className="form-group">
-          <label htmlFor="exampleInputTitle">Visit note</label>
-          <input
-            type="text"
-            className="form-control"
-            aria-describedby="TitleHelp"
-            onChange={(e) => setVisitNote(e.target.value)}
-            defaultValue={visitNote}
-          />
+    <div className="container">
+      <div className="row  d-flex  justify-content-center mt-4">
+        <div className="col-md-5">
+          <form onSubmit={handleSubmit}>
+            {" "}
+            <div className="form-group">
+              <label htmlFor="exampleInputTitle">Visit note</label>
+              <input
+                type="text"
+                className="form-control"
+                aria-describedby="TitleHelp"
+                onChange={(e) => setVisitNote(e.target.value)}
+                defaultValue={visitNote}
+              />
 
-          <button type="submit" className="btn btn-primary">
-            Submit
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div className="row  d-flex  justify-content-center b">
+        <div className="col-md-2 ">
+          <button type="button" className="btn btn btn-success btn-block">
+            Start{" "}
           </button>
         </div>
-      </form>
+      </div>
+
+      <button onClick={goToPreviousPage}>Go back</button>
+      ServiceUserActivities{" "}
+     
       {tasks.map((task) => {
         return (
           <div key={task._id}>

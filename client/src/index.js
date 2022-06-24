@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import { Provider } from "react-redux";
 import "./index.scss";
 
@@ -14,6 +13,7 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate persistor={Persistor}>
         <App />
+      
       </PersistGate>
     </Provider>
   </React.StrictMode>,

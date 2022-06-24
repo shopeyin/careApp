@@ -12,16 +12,17 @@ export const logOutUser = () => ({
 });
 
 export function login(userdata) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const loggedInUser = await axios.post(BASE_URL, userdata);
       console.log(loggedInUser);
       let { data } = loggedInUser;
 
       localStorage.setItem("Authtoken", data.token);
-      //dispatch(setCurrentUser(data.user));
+      dispatch(setCurrentUser(data.user));
     } catch (error) {
       console.log(error.response.data);
+      localStorage.removeItem("Authtoken");
     }
   };
 }

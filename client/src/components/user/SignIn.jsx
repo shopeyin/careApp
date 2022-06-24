@@ -27,6 +27,7 @@ function SignIn({ login }) {
     };
 
     await login(data);
+    console.log(data);
     navigate("/");
   };
 

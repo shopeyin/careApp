@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { Link, Routes, Route, useNavigate, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 import ServiceUsers from "./../serviceuser/ServiceUsers";
@@ -10,27 +10,46 @@ import Carer from "./../carer/Carer";
 import AddCarer from "./../carer/AddCarer";
 import CarerProfile from "./../carer/CarerProfile";
 import { fetchCarers } from "../../../redux/carer/carer-action";
+import { logOutUser } from "../../../redux/user/user-action";
 import { fetchServiceUsers } from "../../../redux/serviceUser/serviceuser-action";
 import "./adminhomepage.style.scss";
 
-function AdminHomePage({ fetchCarers, fetchServiceUsers }) {
+function AdminHomePage({
+  fetchCarers,
+  fetchServiceUsers,
+  logOutUser,
+  currentUser,
+}) {
+  console.log("here", currentUser);
   const navigate = useNavigate();
 
   const goToPreviousPage = () => {
     navigate(-1);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("Authtoken");
+    logOutUser();
+    navigate("/");
+  };
+
   React.useEffect(() => {
-    fetchCarers();
-    fetchServiceUsers();
-  }, [fetchCarers, fetchServiceUsers]);
+    let isMounted = true;
+    if (isMounted) {
+      fetchCarers();
+      fetchServiceUsers();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [fetchCarers, fetchServiceUsers, navigate]);
   return (
     <>
       <div className="container-fluid">
         <div className="row container-fluid__box b">
           <div className="col-sm-2 container-fluid__menu b ">
             <div className="row container-fluid__menu-adminName d-flex align-items-end justify-content-center b ">
-              <h4>Admin name</h4>
+              <h4></h4>
             </div>
 
             <div className="row b d-flex align-items-end justify-content-center">
@@ -42,7 +61,7 @@ function AdminHomePage({ fetchCarers, fetchServiceUsers }) {
               <Link to="serviceusers">Serviceusers</Link>
             </div>
             <div className="row align-items-end container-fluid__menu-logOutBtn b">
-              Log Out
+              <button onClick={logOut}>Logout</button>
             </div>
           </div>
           <div className="col-sm-10  container-fluid__page  b">
@@ -87,8 +106,17 @@ function AdminHomePage({ fetchCarers, fetchServiceUsers }) {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    loading: state.carers.loading,
+    currentUser: state.user.currentUser,
+  };
+};
 const mapDispatchToProps = (dispatch) => ({
   fetchCarers: () => dispatch(fetchCarers()),
   fetchServiceUsers: () => dispatch(fetchServiceUsers()),
+  logOutUser: () => dispatch(logOutUser()),
 });
-export default connect(null, mapDispatchToProps)(AdminHomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminHomePage);

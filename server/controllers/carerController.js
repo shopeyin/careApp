@@ -24,7 +24,6 @@ exports.getAllCarers = async (req, res) => {
 exports.getCarer = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-   
 
     res.status(200).json({
       status: 'success',
@@ -45,6 +44,8 @@ exports.createCarer = async (req, res) => {
     let newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
+      role: req.body.role,
+      barePassword: req.body.barePassword,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
     });
@@ -56,7 +57,7 @@ exports.createCarer = async (req, res) => {
     //     user: newUser,
     //   },
     // });
-   
+
     sendToken(newUser, 201, res);
   } catch (err) {
     res.status(400).json({

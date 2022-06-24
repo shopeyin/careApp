@@ -42,14 +42,7 @@ app.use('/api/v1/visitInformation', visitInformationRoute);
 app.use('/api/v1/private', getPrivateDataRoute);
 
 app.all('*', (req, res, next) => {
-  // res.status(404).json({
-  //   status: 'fail',
-  //   message: `can't find ${req.originalUrl} on this server`,
-  // });
-
-  // const err = new Error(`can't find ${req.originalUrl} on this server`);
-  // (err.status = 'fail'), (err.statusCode = 404);
-
+  
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 
