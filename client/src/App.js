@@ -12,8 +12,9 @@ import "./App.scss";
 function App({ currentUser }) {
   return (
     <div className="App">
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
+
         <Routes>
           <Route
             path="/"

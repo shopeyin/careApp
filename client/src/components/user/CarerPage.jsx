@@ -12,6 +12,13 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+
+  const logOut = () => {
+    localStorage.removeItem("Authtoken");
+    logOutUser();
+    navigate("/");
+  };
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -54,11 +61,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     };
   }, [currentUser, navigate, selectedDate]);
 
-  const logOut = () => {
-    localStorage.removeItem("Authtoken");
-    logOutUser();
-    navigate("/");
-  };
+ 
   let itemsToRender;
   if (serviceUsersVisit) {
     itemsToRender = serviceUsersVisit.map((serviceUser) => {
@@ -67,7 +70,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
           className="row mt-3 pl-4 pr-4 d-flex  justify-content-center"
           key={serviceUser._id}
         >
-          <div className="col-md-3 ">
+          <div className="col-8 col-sm-5 col-md-3">
             <Link to={`activities/${serviceUser._id}`}>
               <div className="card">
                 <div className="card-body">
@@ -90,8 +93,8 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   return (
     <div className="container-fluid p-0 ">
      
-      <div className="row  d-flex  justify-content-center mt-4">
-        <div className="col-md-2 ">
+      <div className="row  d-flex  justify-content-center mt-4 b">
+        <div className="col-8 col-sm-4 r text-center">
           {" "}
           <DatePicker
             selected={selectedDate}
@@ -102,15 +105,13 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
             scrollableMonthYearDropdown
           />
         </div>
-        <div className="col-md-2 ">
-          <button onClick={logOut}>Logout</button>
-        </div>
+       
       </div>
       {serviceUsersVisit && serviceUsersVisit.length ? (
         itemsToRender
       ) : (
         <div className="row mt-3 d-flex  justify-content-center">
-          <div className="col-md-3 ">
+          <div className="col-8 col-sm-4 ">
             <div className="card">
               <div className="card-body text-center">
                 No visit on {format(new Date(selectedDate), "yyyy-MM-dd")}

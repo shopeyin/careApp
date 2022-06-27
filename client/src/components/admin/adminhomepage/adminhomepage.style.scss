@@ -1,52 +1,60 @@
-.container-fluid{
-    &__box{
-     min-height: 100vh;
+.navigation{
+
+    &__sidebar{
+        background-color: red;
+
+        @media screen and (max-width : 575px) {
+                           display: none;
+                  }
     }
-    &__menu{
-        background-color: yellow;
+}
+
+
+
+// .container-fluid{
+//     &__box{
+//      min-height: 100vh;
+//     }
+//     &__menu{
+//         background-color: yellow;
 
        
 
         
 
-         @media screen and (max-width : 575px) {
-               display: none;
-               }
+//          @media screen and (max-width : 575px) {
+//                display: none;
+//                }
     
 
-        &-adminName{
-            background-color: green;
-            min-height: 15%
-        }
-        &-logOutBtn{
-            min-height: 50%;
-        }
-    }
+//         &-adminName{
+//             background-color: green;
+//             min-height: 15%
+//         }
+//         &-logOutBtn{
+//             min-height: 50%;
+//         }
+//     }
 
-    &__page{
+//     &__page{
       
 
-       #homebar{
+//        #homebar{
        
-        @media screen and (max-width : 575px) {
-            display: none !important;
+//         @media screen and (max-width : 575px) {
+//             display: none !important;
            
-            }
+//             }
            
-       }
-    }
-}
-
-.b{
-    border:1px solid black;
-}
-.r{
-    border:1px solid black;
-}
-
-
-// #homebar{
-    
-//     display: none !important;
-//     color:yellow;
+//        }
+//     }
 // }
+
+// .b{
+//     border:1px solid black;
+// }
+// .r{
+//     border:1px solid red;
+// }
+
+

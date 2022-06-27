@@ -14,6 +14,8 @@ function ServiceUserActivities({ currentUser }) {
 
   const navigate = useNavigate();
 
+   
+
   const goToPreviousPage = () => {
     navigate(-1);
   };
@@ -135,42 +137,52 @@ function ServiceUserActivities({ currentUser }) {
         </div>
       </div>
       <div className="row  d-flex  justify-content-center b">
-        <div className="col-md-2 ">
+        <div className="col-5 col-md-2 ">
           <button type="button" className="btn btn btn-success btn-block">
             Start{" "}
           </button>
         </div>
       </div>
+      
 
-      <button onClick={goToPreviousPage}>Go back</button>
-      ServiceUserActivities{" "}
-     
+      {/* <button onClick={goToPreviousPage}>Go back</button>
+      ServiceUserActivities{" "} */}
+
       {tasks.map((task) => {
         return (
-          <div key={task._id}>
-            {task.nameOfTask}
-            <button
-              value="Yes"
-              //   onClick={(e) => {handleInput(e, `${task.nameOfTask}`)}; setDisabled(true)}
-              id={task._id}
-              onClick={(e) => {
-                handleInput(e, `${task.nameOfTask}`);
-                // setDisabled(true);
-              }}
-              disabled={yesDisabled ? yesDisabled.includes(task._id) : ""}
-            >
-              {" "}
-              Yes
-            </button>
-            <button
-              id={task._id}
-              value="No"
-              onClick={(e) => handleInput(e, `${task.nameOfTask}`)}
-              disabled={noDisabled ? noDisabled.includes(task._id) : ""}
-            >
-              {" "}
-              NO
-            </button>
+          <div
+            key={task._id}
+            className="row  d-flex  justify-content-center mt-2 b"
+          >
+            <div className="col-6 col-sm-7 r text-center">{task.nameOfTask}</div>
+            <div className="col r">
+              <button
+                className="btn btn-primary btn-block"
+                value="Yes"
+              
+                id={task._id}
+                onClick={(e) => {
+                  handleInput(e, `${task.nameOfTask}`);
+                  // setDisabled(true);
+                }}
+                disabled={yesDisabled ? yesDisabled.includes(task._id) : ""}
+              >
+                {" "}
+                Yes
+              </button>
+            </div>
+            <div className="col r">
+              <button
+                className="btn btn-secondary btn-block"
+                id={task._id}
+                value="No"
+                onClick={(e) => handleInput(e, `${task.nameOfTask}`)}
+                disabled={noDisabled ? noDisabled.includes(task._id) : ""}
+              >
+                {" "}
+                NO
+              </button>
+            </div>
           </div>
         );
       })}

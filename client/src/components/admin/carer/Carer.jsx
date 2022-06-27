@@ -20,7 +20,7 @@ function Carer({ carers }) {
     itemsToRender = "Loading...";
   }
   return (
-    <div className="row d-flex align-items-center inneradminpage">
+    <div className="row inneradminpage">
       <div className="col-md-6">
         <Link to="add-carer" className="ml-2 mt-1">
           Add Carer

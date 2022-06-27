@@ -1,11 +1,23 @@
 import React from "react";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 
-function Navbar() {
+import { connect } from "react-redux";
+import { logOutUser } from "../../../redux/user/user-action";
+import "./navigation.style.scss";
+function Navbar({ logOutUser, currentUser }) {
+  console.log("NAVBAR", currentUser);
+  let navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.removeItem("Authtoken");
+    logOutUser();
+    navigate("/");
+  };
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light b">
-      <a className="navbar-brand" href="#">
-        Navbar
-      </a>
+    <nav className="navbar navbar-expand-sm navbar-light bg-light b">
+      <NavLink className="navbar-brand" to="/">
+        Home
+      </NavLink>
       <button
         className="navbar-toggler"
         type="button"
@@ -19,30 +31,53 @@ function Navbar() {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
-          </li>
+          {currentUser ? (
+            <li className="nav-item">
+              <button onClick={logOut}>Logout {currentUser.role} </button>
+            </li>
+          ) : (
+            ""
+          )}
+
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Features
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Pricing
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="#">
-              Disabled
-            </a>
+            {currentUser && currentUser.role === "admin" ? (
+              <div id="links">
+                <Link
+                  to="admin/carers"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                >
+                  {" "}
+                  Carers
+                </Link>
+                <Link
+                  to="admin/serviceusers"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                >
+                  {" "}
+                  Serviceusers
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </li>
         </ul>
       </div>
     </nav>
   );
 }
+const mapDispatchToProps = (dispatch) => ({
+  logOutUser: () => dispatch(logOutUser()),
+});
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    loading: state.carers.loading,
+    currentUser: state.user.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
