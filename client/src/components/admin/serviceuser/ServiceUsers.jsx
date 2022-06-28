@@ -36,16 +36,16 @@ function ServiceUsers({
       return (
         
         <div
-          className="card m-2"
+          className="card m-2 link-color"
           style={{ width: "30rem", height: "3.5rem" }}
           key={serviceuser._id}
         >
-          <Link to={`${serviceuser._id}`}> {serviceuser.name}</Link>
+          <Link to={`${serviceuser._id}`} className="link-color"> {serviceuser.name}</Link>
           <Link
             to={`edit/${serviceuser._id}`}
             style={{ position: "relative", top: "-2.5rem", left: "15rem" }}
           >
-            <i className="fa-solid fa-pen"></i>
+            <i className="fa-solid fa-pen link-color"></i>
           </Link>
           <i
             className="fa-solid fa-trash-can mt-2"
@@ -63,8 +63,8 @@ function ServiceUsers({
 
   return (
     <div className="row d-flex align-items-center inneradminpage " >
-      <div className="col-md-6 ">
-        <Link to="add-serviceuser">Add Service User</Link>
+      <div className="col-md-6 link-color">
+        <Link to="add-serviceuser" className="link-color">Add Service User</Link>
         {itemsToRender}
       </div>
     </div>

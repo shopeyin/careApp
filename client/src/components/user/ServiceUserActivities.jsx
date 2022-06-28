@@ -14,8 +14,6 @@ function ServiceUserActivities({ currentUser }) {
 
   const navigate = useNavigate();
 
-   
-
   const goToPreviousPage = () => {
     navigate(-1);
   };
@@ -115,7 +113,8 @@ function ServiceUserActivities({ currentUser }) {
   };
   return (
     <div className="container">
-      <div className="row  d-flex  justify-content-center mt-4">
+      <i className="fa-solid fa-arrow-left mt-2" onClick={goToPreviousPage}></i>
+      <div className="row  d-flex  justify-content-center mt-4 ">
         <div className="col-md-5">
           <form onSubmit={handleSubmit}>
             {" "}
@@ -129,7 +128,7 @@ function ServiceUserActivities({ currentUser }) {
                 defaultValue={visitNote}
               />
 
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary mt-1">
                 Submit
               </button>
             </div>
@@ -143,10 +142,6 @@ function ServiceUserActivities({ currentUser }) {
           </button>
         </div>
       </div>
-      
-
-      {/* <button onClick={goToPreviousPage}>Go back</button>
-      ServiceUserActivities{" "} */}
 
       {tasks.map((task) => {
         return (
@@ -154,12 +149,11 @@ function ServiceUserActivities({ currentUser }) {
             key={task._id}
             className="row  d-flex  justify-content-center mt-2 b"
           >
-            <div className="col-6 col-sm-7 r text-center">{task.nameOfTask}</div>
-            <div className="col r">
+            <div className="col-6 col-sm-7  text-center">{task.nameOfTask}</div>
+            <div className="col ">
               <button
                 className="btn btn-primary btn-block"
                 value="Yes"
-              
                 id={task._id}
                 onClick={(e) => {
                   handleInput(e, `${task.nameOfTask}`);
@@ -171,7 +165,7 @@ function ServiceUserActivities({ currentUser }) {
                 Yes
               </button>
             </div>
-            <div className="col r">
+            <div className="col ">
               <button
                 className="btn btn-secondary btn-block"
                 id={task._id}

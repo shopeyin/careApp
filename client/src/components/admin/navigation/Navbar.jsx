@@ -14,8 +14,8 @@ function Navbar({ logOutUser, currentUser }) {
     navigate("/");
   };
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light b">
-      <NavLink className="navbar-brand" to="/">
+    <nav className="navbar navbar-expand-sm navbar-light bg-light">
+      <NavLink className="navbar-brand ml-2" to="/">
         Home
       </NavLink>
       <button
@@ -33,7 +33,9 @@ function Navbar({ logOutUser, currentUser }) {
         <ul className="navbar-nav">
           {currentUser ? (
             <li className="nav-item">
-              <button onClick={logOut}>Logout {currentUser.role} </button>
+              <button onClick={logOut} className="btn btn-info">
+                Logout{" "}
+              </button>
             </li>
           ) : (
             ""
@@ -46,6 +48,7 @@ function Navbar({ logOutUser, currentUser }) {
                   to="admin/carers"
                   data-toggle="collapse"
                   data-target="#navbarNav"
+                  className="link-color"
                 >
                   {" "}
                   Carers
@@ -54,6 +57,7 @@ function Navbar({ logOutUser, currentUser }) {
                   to="admin/serviceusers"
                   data-toggle="collapse"
                   data-target="#navbarNav"
+                  className="link-color"
                 >
                   {" "}
                   Serviceusers

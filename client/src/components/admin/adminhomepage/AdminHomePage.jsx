@@ -27,12 +27,6 @@ function AdminHomePage({
     navigate(-1);
   };
 
-  const logOut = () => {
-    localStorage.removeItem("Authtoken");
-    logOutUser();
-    navigate("/");
-  };
-
   React.useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -44,98 +38,56 @@ function AdminHomePage({
     };
   }, [fetchCarers, fetchServiceUsers, navigate]);
   return (
-    <div className="container-fluid navigation r">
-      <div class="row ">
-        <div class="col-sm-2 navigation__sidebar b">
-          <div class="row">
-            <div class="col">
-              {" "}
-              <h4>{currentUser ? currentUser.name : ""}</h4>{" "}
+    <div className="container-fluid navigation">
+      <div className="row ">
+        <div className="col-sm-2 navigation__sidebar">
+          <div className="row">
+            <div className="col">
+              <Link to="carers" className="link-color">
+                Carers
+              </Link>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col">
-              <Link to="carers"> Carers</Link>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <Link to="serviceusers">Serviceusers</Link>
+          <div className="row">
+            <div className="col">
+              <Link to="serviceusers" className="link-color">
+                Serviceusers
+              </Link>
             </div>
           </div>
         </div>
-        <div class="col-sm-10">
-          <button onClick={goToPreviousPage} className="m-1">
-            Go back{" "}
+        <div className="col-sm-10 navigation__innerpage">
+          <button
+            type="button"
+            onClick={goToPreviousPage}
+            className="btn btn-dark m-1"
+          >
+            Back
           </button>
+          <h1> Welcome {currentUser ? currentUser.name : ""}</h1>
           <Routes>
-            <Route path="carers" element={<Carer />} />
+            <Route path="carers" index element={<Carer />} />
+            <Route path="carers/add-carer" element={<AddCarer />} />
+            <Route path="carers/:carerId" element={<CarerProfile />} />
+
             <Route path="serviceusers" element={<ServiceUsers />} />
+            <Route
+              path="serviceusers/:serviceuserId"
+              element={<ServiceUserProfile />}
+            />
+            <Route
+              path="serviceusers/add-serviceuser"
+              element={<CreateServiceUser />}
+            />
+
+            <Route
+              path="serviceusers/edit/:id"
+              element={<UpdateServiceUser />}
+            />
           </Routes>
         </div>
       </div>
     </div>
-    // <>
-    //   <div className="container-fluid">
-    //     <div className="row container-fluid__box b">
-    //       <div className="col-sm-2 container-fluid__menu b ">
-    //         <div className="row container-fluid__menu-adminName d-flex align-items-end justify-content-center b ">
-    //           <h4>{currentUser ? currentUser.name : ""}</h4>
-    //         </div>
-
-    //         <div className="row b d-flex align-items-end justify-content-center">
-    //           {" "}
-    //           <Link to="carers"> Carers</Link>
-    //         </div>
-    //         <div className="row b d-flex align-items-end justify-content-center">
-    //           {" "}
-    //           <Link to="serviceusers">Serviceusers</Link>
-    //         </div>
-    //         <div className="row align-items-end container-fluid__menu-logOutBtn b">
-    //           <button onClick={logOut}>Logout</button>
-    //         </div>
-    //       </div>
-    //       <div className="col-sm-10  container-fluid__page  b">
-    //         <div
-    //           className="row b d-flex align-items-end justify-content-center"
-    //           style={{ minHeight: "15%" }}
-    //           id="homebar"
-    //         >
-    //           <div className="col">
-    //             <button onClick={goToPreviousPage} className="m-1">
-    //               {" "}
-    //               Go back
-    //             </button>
-    //             <Link to=""> Home</Link>
-    //           </div>
-    //         </div>
-    //         {/* <h1>Add background picture Admin homepage</h1> */}
-
-    //         <Routes>
-    //           <Route path="carers" element={<Carer />} />
-    //           <Route path="carers/add-carer" element={<AddCarer />} />
-    //           <Route path="carers/:carerId" element={<CarerProfile />} />
-
-    //           <Route path="serviceusers" element={<ServiceUsers />} />
-    //           <Route
-    //             path="serviceusers/:serviceuserId"
-    //             element={<ServiceUserProfile />}
-    //           />
-    //           <Route
-    //             path="serviceusers/add-serviceuser"
-    //             element={<CreateServiceUser />}
-    //           />
-
-    //           <Route
-    //             path="serviceusers/edit/:id"
-    //             element={<UpdateServiceUser />}
-    //           />
-    //         </Routes>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import { format } from "date-fns";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Visit from "../visit/Visit";
@@ -60,55 +61,69 @@ function CarerProfile({ serviceUsers }) {
   }, [params.carerId, reload]);
   console.log(visits.visit);
   return (
-    <div className="row d-flex align-items-center inneradminpage">
-      <div className="col-md-5">
-        <h2>CarerProfile</h2>
-        <p>{carer ? carer.name : ""}</p>
-
-        <Visit
-          carerId={carer._id}
-          reMountComponent={reMountComponent}
-          handleDeleteVisit={handleDeleteVisit}
-        />
-        <h3>
-          {" "}
-          {carer ? carer.name : ""} has {visits.visitLength} visits
-        </h3>
-        {visits.visit &&
-          visits.visit.map((item) => {
-            return (
-              <div key={item._id}>
-                <Link to={`visit/${item._id}`}>Visit Id - {item._id} </Link>
-                <p>Date of Visit- {item.dateOfVisit}</p> Service users Id -{" "}
-                {item.serviceusersToVisit.map((i, index) => {
-                  return <p key={index}>{i}</p>;
-                })}{" "}
-                <button
-                  onClick={() => {
-                    handleDeleteVisit(item._id);
-                  }}
-                >
-                  Delete
-                </button>
-                <AddServiceUserToVisit
-                  serviceUsers={serviceUsers}
-                  visitId={item._id}
-                  dateOfVisit={item.dateOfVisit}
-                  reMountComponent={reMountComponent}
-                />
+    <>
+      <div className="row mt-4">
+        <div className="col-md-5">
+          <h3>{carer ? carer.name : ""}</h3>
+        </div>
+      </div>
+      <div className="row ">
+        <div className="col-md-5">
+          <Visit
+            carerId={carer._id}
+            reMountComponent={reMountComponent}
+            handleDeleteVisit={handleDeleteVisit}
+          />
+        </div>
+      </div>
+      <div className="row mt-1">
+        <div className="col-md-5">
+          <h3>
+            {carer ? carer.name : ""} has {visits.visitLength} visits
+          </h3>
+        </div>
+      </div>
+      {visits.visit &&
+        visits.visit.map((item) => {
+          return (
+            <div key={item._id} className="row mt-4">
+              <div className="col-sm-5 col-md-5 col-lg-3  date-center">
+                {" "}
+                <h3>
+                  Date of Visit-{" "}
+                  {format(new Date(item.dateOfVisit), "yyyy-MM-dd")}
+                </h3>
+              </div>
+              <div className="col col-md-2  ">
                 <DeleteServiceUserFromVisit
                   serviceUsers={serviceUsers}
                   visitId={item._id}
                   serviceUsersToVisitId={item.serviceusersToVisit}
                   reMountComponent={reMountComponent}
                 />
-              
-                <br></br>
               </div>
-            );
-          })}
-      </div>
-    </div>
+              <div className="col col-md-2 ">
+                {" "}
+                <AddServiceUserToVisit
+                  serviceUsers={serviceUsers}
+                  visitId={item._id}
+                  dateOfVisit={item.dateOfVisit}
+                  reMountComponent={reMountComponent}
+                />
+              </div>
+              <div className="col col-sm-1 ">
+                <i
+                  className="fa-solid fa-trash-can mt-2"
+                  onClick={() => {
+                    handleDeleteVisit(item._id);
+                  }}
+                ></i>
+              </div>
+            </div>
+          );
+        })}
+    </>
+   
   );
 }
 const mapStateToProps = (state) => ({

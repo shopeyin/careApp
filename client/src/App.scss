@@ -1,3 +1,11 @@
-.inneradminpage{
- min-height: 87vh;
+.link-color{
+    color:black;
+    text-decoration: none;
 }
+.date-center{
+    
+    @media screen and (max-width: 575px) {
+       text-align: center;
+    }
+}
+

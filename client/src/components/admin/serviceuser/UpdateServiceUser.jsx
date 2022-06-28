@@ -47,7 +47,7 @@ function UpdateServiceUser() {
   return (
     <div className="row d-flex align-items-center inneradminpage">
       <div className="col-md-4 ">
-        Update Service User{" "}
+       <h3><b>Update Service User{" "}</b></h3>
         <form onSubmit={handleSubmit}>
           {" "}
           <div className="form-group">

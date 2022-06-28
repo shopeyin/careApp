@@ -12,7 +12,6 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-
   const logOut = () => {
     localStorage.removeItem("Authtoken");
     logOutUser();
@@ -61,7 +60,6 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     };
   }, [currentUser, navigate, selectedDate]);
 
- 
   let itemsToRender;
   if (serviceUsersVisit) {
     itemsToRender = serviceUsersVisit.map((serviceUser) => {
@@ -70,16 +68,20 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
           className="row mt-3 pl-4 pr-4 d-flex  justify-content-center"
           key={serviceUser._id}
         >
-          <div className="col-8 col-sm-5 col-md-3">
-            <Link to={`activities/${serviceUser._id}`}>
-              <div className="card">
-                <div className="card-body">
-                  <h4 className="card-title"> {serviceUser.name}</h4>
-                  <h5 className="card-subtitle mb-2 text-muted">
+          <div className="col-8 col-sm-5 col-md-4 col-lg-3">
+            <Link to={`activities/${serviceUser._id}`} className="link-color">
+              <div className="card ">
+                <div className="card-body ">
+                  <h4 className="card-title link-color"> {serviceUser.name}</h4>
+                  <h5 className="card-subtitle mb-2 text-muted link-color">
                     Visit 1 hour
                   </h5>
-                  <h5 className="card-subtitle mb-2 text-muted">6:30-07:30</h5>
-                  <h6 className="card-text">{serviceUser.address}</h6>
+                  <h5 className="card-subtitle mb-2 text-muted link-color">
+                    6:30-07:30
+                  </h5>
+                  <h6 className="card-text ">
+                    {serviceUser.address}
+                  </h6>
                 </div>
               </div>
             </Link>{" "}
@@ -89,12 +91,10 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
     });
   }
 
-
   return (
     <div className="container-fluid p-0 ">
-     
-      <div className="row  d-flex  justify-content-center mt-4 b">
-        <div className="col-8 col-sm-4 r text-center">
+      <div className="row  d-flex  justify-content-center mt-4 ">
+        <div className="col-8 col-sm-4  text-center">
           {" "}
           <DatePicker
             selected={selectedDate}
@@ -105,7 +105,6 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
             scrollableMonthYearDropdown
           />
         </div>
-       
       </div>
       {serviceUsersVisit && serviceUsersVisit.length ? (
         itemsToRender

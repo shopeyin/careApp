@@ -25,7 +25,6 @@ function DeleteServiceUserFromVisit({
     await axios.post(`${BASE_URL}/delete/${visitId}`, {
       serviceusersToVisit: serviceUserId,
     });
-   
   };
 
   function filterServiceUsers(arr) {
@@ -49,8 +48,12 @@ function DeleteServiceUserFromVisit({
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Remove Service User
+      <Button
+        variant="primary"
+        onClick={handleShow}
+        className="btn btn-success"
+      >
+        Service Users In Visit
       </Button>
 
       <Modal
@@ -61,20 +64,21 @@ function DeleteServiceUserFromVisit({
         backdrop="static"
       >
         <Modal.Header>
-          <Modal.Title> Remove Service User from Visit {visitId}--</Modal.Title>
+          <Modal.Title> All Service Users In Visit </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {filterServiceUsers(serviceUsersToVisitId).map((serviceuser) => {
             return (
               <p key={serviceuser.id}>
-                {serviceuser.name} {serviceuser.id}
+                {serviceuser.name}
                 <button
+                  className="btn btn-danger m-2"
                   onClick={() => {
                     handleSubmit(visitId, serviceuser.id);
                     reMountComponent();
                   }}
                 >
-                  Delete
+                  Remove Service User from Visit
                 </button>
               </p>
             );

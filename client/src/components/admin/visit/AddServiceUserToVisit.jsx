@@ -39,7 +39,7 @@ function AddServiceUserToVisit({
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={handleShow} className="btn btn-info">
         Add Service User
       </Button>
 
@@ -51,7 +51,7 @@ function AddServiceUserToVisit({
         backdrop="static"
       >
         <Modal.Header>
-          <Modal.Title>Add ServiceUser To Visit --</Modal.Title>
+          <Modal.Title>Add ServiceUser To Visit </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {" "}

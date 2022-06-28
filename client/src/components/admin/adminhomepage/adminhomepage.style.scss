@@ -1,11 +1,17 @@
 .navigation{
-
+   
     &__sidebar{
         background-color: red;
-
+      
         @media screen and (max-width : 575px) {
                            display: none;
                   }
+    }
+
+    &__innerpage{
+ 
+        min-height: 97vh;
+     
     }
 }
 
