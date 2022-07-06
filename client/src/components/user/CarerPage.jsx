@@ -6,21 +6,39 @@ import { connect } from "react-redux";
 import { logOutUser, fetchUserData } from "../../redux/user/user-action";
 import "./carerpage.style.scss";
 import axios from "axios";
+import haversine from "haversine-distance";
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerPage({ currentUser, logOutUser, fetchUserData }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const logOut = () => {
-    localStorage.removeItem("Authtoken");
-    logOutUser();
-    navigate("/");
-  };
-
   let navigate = useNavigate();
 
+  const getCarerLocation = () => {
+    const watchId = navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log("LAT", position.coords.latitude);
+        console.log("LONG", position.coords.longitude);
+        const a = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        const b = { latitude:55.92356, longitude: -3.289782 };
+        console.log("CALC", haversine(a, b));
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      {
+        enableHighAccuracy: true,
+      }
+    );
+
+  };
+
   useEffect(() => {
+    //getCarerLocation();
     let mounted = true;
 
     if (currentUser.role === "admin") {
@@ -79,7 +97,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
                   <h5 className="card-subtitle mb-2 text-muted link-color">
                     6:30-07:30
                   </h5>
-                  <h6 className="card-text ">
+                  <h6 className="card-text link-color ">
                     {serviceUser.address}
                   </h6>
                 </div>

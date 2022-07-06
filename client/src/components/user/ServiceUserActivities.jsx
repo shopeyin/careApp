@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchAllTaskofaServiceUser } from "../admin/task/taskFunctions";
 import { addVisitInfo } from "./utils";
 import { useParams, useNavigate } from "react-router-dom";
+import StartVisit from "./StartVisit";
 function ServiceUserActivities({ currentUser }) {
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
@@ -18,11 +19,12 @@ function ServiceUserActivities({ currentUser }) {
     navigate(-1);
   };
   let visitId = localStorage.getItem("visitId");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submitted", visitNote);
 
-    let visitId = localStorage.getItem("visitId");
+    // let visitId = localStorage.getItem("visitId");
     localStorage.setItem(
       `visitNoteDetails ${params.id} ${visitId} `,
       visitNote
@@ -106,11 +108,13 @@ function ServiceUserActivities({ currentUser }) {
 
   let data = {
     visitNote: visitNote,
-    carerid: currentUser._id,
-    serviceuserid: params.id,
+    visitId: visitId,
+    carerId: currentUser._id,
+    serviceuserId: params.id,
 
     activities,
   };
+  console.log(data);
   return (
     <div className="container">
       <i className="fa-solid fa-arrow-left mt-2" onClick={goToPreviousPage}></i>
@@ -137,10 +141,12 @@ function ServiceUserActivities({ currentUser }) {
       </div>
       <div className="row  d-flex  justify-content-center b">
         <div className="col-5 col-md-2 ">
-          <button type="button" className="btn btn btn-success btn-block">
+          <StartVisit />
+          {/* <button type="button" className="btn btn btn-success btn-block">
             Start{" "}
-          </button>
+          </button> */}
         </div>
+        
       </div>
 
       {tasks.map((task) => {

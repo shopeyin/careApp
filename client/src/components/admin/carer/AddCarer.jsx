@@ -10,6 +10,7 @@ function AddCarer({ createNewCarer, fetchCarers }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
+  const [errMessage, setErrMessage] = useState(false);
 
   const navigate = useNavigate();
   const goToPreviousPage = () => {
@@ -28,15 +29,28 @@ function AddCarer({ createNewCarer, fetchCarers }) {
       role,
     };
 
+    if (!name || !email || !password || !confirmPassword || !role) {
+      setErrMessage(true);
+      setTimeout(() => {
+        setErrMessage(false);
+      }, 4000);
+      return;
+    }
+
     createNewCarer(data, fetchCarers);
 
     goToPreviousPage();
   };
+  console.log(errMessage);
   return (
     <div className="row d-flex align-items-center inneradminpage ">
       <div className="col-md-5">
         <form onSubmit={handleSubmit}>
           {" "}
+          <p style={{ color: "red" }}>
+            {" "}
+            {errMessage ? "Input all fields" : ""}
+          </p>
           <div className="form-group">
             <label htmlFor="exampleInputTitle"> Name {role}</label>
             <input

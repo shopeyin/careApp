@@ -6,13 +6,25 @@ const serviceUserSchema = new mongoose.Schema({
     required: [true, 'service user must have a name'],
     unique: true,
   },
-  address: {
+  houseAddress: {
+    type: String,
+    required: true,
+  },
+  postCode: {
     type: String,
     required: true,
   },
   phoneNumber: {
     type: Number,
     required: [true, 'service user must have a phone number'],
+  },
+  longitude: {
+    type: Number,
+    required: [true, 'longitude must be available'],
+  },
+  latitude: {
+    type: Number,
+    required: [true, 'latitude must be available'],
   },
   createdAt: {
     type: Date,

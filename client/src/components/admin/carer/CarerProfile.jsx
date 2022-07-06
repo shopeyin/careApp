@@ -7,14 +7,18 @@ import { Link } from "react-router-dom";
 import Visit from "../visit/Visit";
 import AddServiceUserToVisit from "../visit/AddServiceUserToVisit";
 import DeleteServiceUserFromVisit from "../visit/DeleteServiceUserFromVisit";
+import VisitInformation from "../visit/VisitInformation";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
 const URL = "http://127.0.0.1:1000/api/v1/visit";
+const VISIT_URL = "http://127.0.0.1:1000/api/v1/visitInformation";
 
 function CarerProfile({ serviceUsers }) {
   const [visits, setVisits] = React.useState([]);
   const [reload, setReload] = React.useState(false);
+
+
 
   const reMountComponent = () => {
     setReload(!reload);
@@ -64,7 +68,9 @@ function CarerProfile({ serviceUsers }) {
     <>
       <div className="row mt-4">
         <div className="col-md-5">
-          <h3>{carer ? carer.name : ""}</h3>
+          <h3>
+            {carer ? carer.name : ""} {carer ? carer.barePassword : ""}
+          </h3>
         </div>
       </div>
       <div className="row ">
@@ -87,14 +93,14 @@ function CarerProfile({ serviceUsers }) {
         visits.visit.map((item) => {
           return (
             <div key={item._id} className="row mt-4">
-              <div className="col-sm-5 col-md-5 col-lg-3  date-center">
+              <div className="col col-md-2">
                 {" "}
-                <h3>
-                  Date of Visit-{" "}
-                  {format(new Date(item.dateOfVisit), "yyyy-MM-dd")}
-                </h3>
+                <VisitInformation
+                  visitId={item._id}
+                  dateOfVisit={format(new Date(item.dateOfVisit), "yyyy-MM-dd")}
+                />
               </div>
-              <div className="col col-md-2  ">
+              <div className="col-12 col-md-2  ">
                 <DeleteServiceUserFromVisit
                   serviceUsers={serviceUsers}
                   visitId={item._id}
@@ -123,7 +129,6 @@ function CarerProfile({ serviceUsers }) {
           );
         })}
     </>
-   
   );
 }
 const mapStateToProps = (state) => ({

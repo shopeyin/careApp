@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { logOutUser } from "../../../redux/user/user-action";
 import "./navigation.style.scss";
 function Navbar({ logOutUser, currentUser }) {
-  console.log("NAVBAR", currentUser);
   let navigate = useNavigate();
 
   const logOut = () => {
@@ -77,7 +76,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     loading: state.carers.loading,
     currentUser: state.user.currentUser,

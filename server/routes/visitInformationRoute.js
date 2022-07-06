@@ -3,6 +3,8 @@ const visitInformationController = require('../controllers/visitInformationContr
 
 const router = express.Router();
 
+router.route('/:id/').get(visitInformationController.getVisit);
+
 router
   .route('/')
 

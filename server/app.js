@@ -6,6 +6,11 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 app.use(cors());
+// app.use(
+//   cors({
+//     origin: '*',
+//   })
+// );
 
 const serviceUserRoute = require('./routes/serviceUserRoutes');
 const carerRoute = require('./routes/carerRoutes');
@@ -42,7 +47,6 @@ app.use('/api/v1/visitInformation', visitInformationRoute);
 app.use('/api/v1/private', getPrivateDataRoute);
 
 app.all('*', (req, res, next) => {
-  
   next(new AppError(`can't find ${req.originalUrl} on this server`, 404));
 });
 

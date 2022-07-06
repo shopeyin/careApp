@@ -17,3 +17,23 @@ exports.createVisitInformation = async (req, res) => {
     });
   }
 };
+
+exports.getVisit = async (req, res) => {
+  try {
+    const visit = await VisitInformation.find({
+      visitId: req.params.id,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        visit,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
