@@ -18,8 +18,6 @@ function CarerProfile({ serviceUsers }) {
   const [visits, setVisits] = React.useState([]);
   const [reload, setReload] = React.useState(false);
 
-
-
   const reMountComponent = () => {
     setReload(!reload);
   };
@@ -85,7 +83,8 @@ function CarerProfile({ serviceUsers }) {
       <div className="row mt-1">
         <div className="col-md-5">
           <h3>
-            {carer ? carer.name : ""} has {visits.visitLength} visits
+            {carer ? carer.name : ""} has{" "}
+            {visits.visitLength > 1 ? `${visits.visitLength}  visits` : `${visits.visitLength}  visit`}
           </h3>
         </div>
       </div>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-function StartVisit({ startTimeFunction }) {
+function EndVisit({ endTimeFunction, disableBtn }) {
   const [show, setShow] = React.useState(false);
-
   const handleClose = () => {
     setShow(false);
   };
@@ -14,13 +13,14 @@ function StartVisit({ startTimeFunction }) {
   return (
     <>
       <Button
+        disabled={disableBtn ? disableBtn : ""}
         variant="primary"
         onClick={() => {
           handleShow();
         }}
         className="btn btn-success btn-block"
       >
-        Start Visit
+        End Visit
       </Button>
 
       <Modal
@@ -31,7 +31,7 @@ function StartVisit({ startTimeFunction }) {
         backdrop="static"
       >
         <Modal.Header>
-          <Modal.Title> Do you want to start the Visit </Modal.Title>
+          <Modal.Title> Do you want to End the Visit </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {" "}
@@ -39,14 +39,13 @@ function StartVisit({ startTimeFunction }) {
             <div className="col-5">
               <button
                 type="button"
-                className="btn btn-block btn-success"
+                className="btn btn-block btn-secondary"
                 onClick={() => {
-                  startTimeFunction();
-
+                  endTimeFunction();
                   handleClose();
                 }}
               >
-                Start{" "}
+                End{" "}
               </button>
             </div>
           </div>
@@ -66,4 +65,4 @@ function StartVisit({ startTimeFunction }) {
   );
 }
 
-export default StartVisit;
+export default EndVisit;
