@@ -58,16 +58,16 @@ function VisitInformation({ visitId, dateOfVisit }) {
               <div key={visit._id}>
                 {" "}
                 Visit Note: {visit.visitNote}
+                <p> Visit Time: {visit.time}</p>
                 {Object.keys(visit.activities).map((key, i) => {
                   return (
                     <div key={i}>
                       {key}--
                       {visit.activities[key]}
-                    
                     </div>
                   );
                 })}
-                  <p> ---------------------</p>
+                <p> ---------------------</p>
               </div>
             );
           })}

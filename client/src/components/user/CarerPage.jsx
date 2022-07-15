@@ -20,12 +20,13 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
       (position) => {
         console.log("LAT", position.coords.latitude);
         console.log("LONG", position.coords.longitude);
-        const a = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        };
-        const b = { latitude:55.92356, longitude: -3.289782 };
-        console.log("CALC", haversine(a, b));
+
+        // const a = {
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        // };
+        // const b = { latitude:55.92356, longitude: -3.289782 };
+        // console.log("CALC", haversine(a, b));
       },
       (error) => {
         console.log(error.message);
@@ -34,7 +35,7 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
         enableHighAccuracy: true,
       }
     );
-
+    
   };
 
   useEffect(() => {

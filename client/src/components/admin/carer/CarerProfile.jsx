@@ -117,6 +117,7 @@ function CarerProfile({ serviceUsers }) {
                 />
               </div>
               <div className="col col-sm-1 ">
+           
                 <i
                   className="fa-solid fa-trash-can mt-2"
                   onClick={() => {

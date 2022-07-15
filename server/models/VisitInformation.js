@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const visitInformationSchema = new mongoose.Schema({
   visitNote: String,
+  time:String,
   visitId: { type: mongoose.SchemaTypes.ObjectId, ref: 'Visit' },
   carerId:  { type: mongoose.SchemaTypes.ObjectId, ref: 'User' },
 

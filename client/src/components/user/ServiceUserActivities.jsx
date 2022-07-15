@@ -17,16 +17,36 @@ function ServiceUserActivities({ currentUser }) {
 
   const [startEndButton, setStartEndButton] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
-
+  
   const [visitStartedStatus, setVisitStartedStatus] = useState(false);
+
+  
 
   const params = useParams();
 
-  // const changeAllBtnStatus = () => {
-  //   setAllBtnStatus(false);
-  //   //localStorage.setItem(`allBtnStatus`, !allBtnStatus);
-  // };
   const navigate = useNavigate();
+
+  const getCarerLocation = () => {
+    const watchId = navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log("LAT", position.coords.latitude);
+        console.log("LONG", position.coords.longitude);
+        // const a = {
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        // };
+        // const b = { latitude:55.92356, longitude: -3.289782 };
+        // console.log("CALC", haversine(a, b));
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      {
+        enableHighAccuracy: true,
+      }
+    );
+    return watchId;
+  };
 
   let visitId = localStorage.getItem("visitId");
 
@@ -43,7 +63,7 @@ function ServiceUserActivities({ currentUser }) {
     localStorage.removeItem("visitId");
 
     localStorage.removeItem(`noDISABLED ${params.id} ${visitId}`);
-    localStorage.removeItem(`yesDISABLED ${params.id} ${visitId}`)
+    localStorage.removeItem(`yesDISABLED ${params.id} ${visitId}`);
 
     console.log("deleting");
   };
@@ -59,14 +79,17 @@ function ServiceUserActivities({ currentUser }) {
     localStorage.setItem(`startTime ${params.id}${visitId}`, formattedDate);
     localStorage.setItem(`visitStartedStatus ${params.id}${visitId}`, true);
     localStorage.setItem(`startEndButton ${params.id}${visitId}`, true);
+
     setVisitStartedStatus(true);
     setStartEndButton(true);
+    getCarerLocation();
   };
 
   const endTimeFunction = () => {
     const date = new Date();
     let formattedDate = format(date, "HH:mm");
     setEndTime(format(date, "HH:mm"));
+
     localStorage.setItem(`endTime ${params.id}${visitId}`, formattedDate);
     localStorage.setItem(`visitStartedStatus ${params.id}${visitId}`, false);
     localStorage.setItem(
@@ -77,19 +100,30 @@ function ServiceUserActivities({ currentUser }) {
     setVisitStartedStatus(false);
     setDisableBtn(true);
 
-    setTimeout(deleteLocalStorageItems, 5000);
+    handleSubmit();
+    //setTimeout(deleteLocalStorageItems, 9000);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submitted", visitNote);
+  const handleSubmit = () => {
+    const date = new Date();
+    if (!visitNote || !visitId || !startTime || !activities) return;
+    let data = {
+      time: `${startTime}-${format(date, "HH:mm")}`,
+      visitNote: visitNote,
+      visitId: visitId,
+      carerId: currentUser._id,
+      serviceuserId: params.id,
+
+      activities,
+    };
+
+    addVisitInfo(data);
+    console.log("submitted", data);
 
     localStorage.setItem(
       `visitNoteDetails ${params.id} ${visitId} `,
       visitNote
     );
-
-    addVisitInfo(data);
   };
 
   const getInitialVisitValues = () => {
@@ -99,12 +133,13 @@ function ServiceUserActivities({ currentUser }) {
 
     let timeStart = localStorage.getItem(`startTime ${params.id}${visitId}`);
     let timeEnd = localStorage.getItem(`endTime ${params.id}${visitId}`);
-    let visitStartedStatus = localStorage.getItem(
-      `visitStartedStatus ${params.id}${visitId}`
+    let visitStartedStatus = JSON.parse(
+      localStorage.getItem(`visitStartedStatus ${params.id}${visitId}`)
     );
     let startEndButton = localStorage.getItem(
       `startEndButton ${params.id}${visitId}`
     );
+
     let disableBtn = localStorage.getItem(`disableBtn ${params.id}${visitId}`);
 
     setDisableBtn(disableBtn);
@@ -130,10 +165,7 @@ function ServiceUserActivities({ currentUser }) {
 
   useEffect(() => {
     console.log("component mounting");
-    let x = localStorage.getItem(
-      `yesDISABLED 62c58d74b3a50324f46f42b1 62cd34583cabb10c74c8d217`
-    );
-    console.log(x);
+
     getInitialVisitValues();
     getBtnStatus();
     const fetchTask = async () => {
@@ -183,17 +215,6 @@ function ServiceUserActivities({ currentUser }) {
     setActivities({ ...activities, [key]: e.target.value });
   };
 
-  let data = {
-    visitNote: visitNote,
-    visitId: visitId,
-    carerId: currentUser._id,
-    serviceuserId: params.id,
-
-    activities,
-  };
-  // localStorage.setItem("START", startTime);
-  console.log(visitStartedStatus);
-  console.log(startEndButton);
   return (
     <div className="container">
       <i className="fa-solid fa-arrow-left mt-2" onClick={goToPreviousPage}></i>
@@ -213,13 +234,13 @@ function ServiceUserActivities({ currentUser }) {
                 defaultValue={visitNote}
               />
 
-              <button
+              {/* <button
                 type="submit"
                 className="btn btn-primary mt-1"
-                disabled={!visitStartedStatus}
+                // disabled={!visitStartedStatus}
               >
                 Submit
-              </button>
+              </button> */}
             </div>
           </form>
         </div>
@@ -255,7 +276,7 @@ function ServiceUserActivities({ currentUser }) {
                   disabled={yesDisabled ? yesDisabled.includes(task._id) : ""}
                 >
                   {" "}
-                  yes
+                  Yes
                 </button>
               ) : (
                 <button
