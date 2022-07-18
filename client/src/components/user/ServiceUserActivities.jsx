@@ -14,39 +14,17 @@ function ServiceUserActivities({ currentUser }) {
   const [noDisabled, setNoDisabled] = useState([]);
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
-
   const [startEndButton, setStartEndButton] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
-  
   const [visitStartedStatus, setVisitStartedStatus] = useState(false);
 
-  
+  const [locationPermissionError, setLocationPermissionError] = useState(false);
+  const [lengthOfActivities, setLengthOfActivities] = useState();
+  const [endVisitError, setEndVisitError] = useState(false);
 
   const params = useParams();
 
   const navigate = useNavigate();
-
-  const getCarerLocation = () => {
-    const watchId = navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log("LAT", position.coords.latitude);
-        console.log("LONG", position.coords.longitude);
-        // const a = {
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        // };
-        // const b = { latitude:55.92356, longitude: -3.289782 };
-        // console.log("CALC", haversine(a, b));
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      {
-        enableHighAccuracy: true,
-      }
-    );
-    return watchId;
-  };
 
   let visitId = localStorage.getItem("visitId");
 
@@ -54,7 +32,6 @@ function ServiceUserActivities({ currentUser }) {
     let visitId = localStorage.getItem("visitId");
 
     localStorage.removeItem(`visitNoteDetails ${params.id} ${visitId} `);
-
     localStorage.removeItem(`startTime ${params.id}${visitId}`);
     localStorage.removeItem(`endTime ${params.id}${visitId}`);
     localStorage.removeItem(`visitStartedStatus ${params.id}${visitId}`);
@@ -72,39 +49,90 @@ function ServiceUserActivities({ currentUser }) {
     navigate(-1);
   };
 
-  const startTimeFunction = () => {
-    const date = new Date();
-    let formattedDate = format(date, "HH:mm");
-    setStartTime(formattedDate);
-    localStorage.setItem(`startTime ${params.id}${visitId}`, formattedDate);
-    localStorage.setItem(`visitStartedStatus ${params.id}${visitId}`, true);
-    localStorage.setItem(`startEndButton ${params.id}${visitId}`, true);
+  const startTimeFunction = async () => {
+    const location = navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+        // setLatitude(position.coords.latitude);
+        // setLongitude(position.coords.longitude);
+        // const a = {
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        // };
+        // const b = { latitude:55.92356, longitude: -3.289782 };
+        // console.log("CALC", haversine(a, b));
 
-    setVisitStartedStatus(true);
-    setStartEndButton(true);
-    getCarerLocation();
+        const date = new Date();
+        let formattedDate = format(date, "HH:mm");
+        setStartTime(formattedDate);
+        localStorage.setItem(`startTime ${params.id}${visitId}`, formattedDate);
+        localStorage.setItem(`visitStartedStatus ${params.id}${visitId}`, true);
+        localStorage.setItem(`startEndButton ${params.id}${visitId}`, true);
+
+        setVisitStartedStatus(true);
+        setStartEndButton(true);
+      },
+      (error) => {
+        console.log(error.message);
+        setLocationPermissionError(true);
+        setTimeout(() => {
+          setLocationPermissionError(false);
+        }, 5000);
+      },
+      {
+        enableHighAccuracy: true,
+      }
+    );
+    return location;
   };
 
   const endTimeFunction = () => {
-    const date = new Date();
-    let formattedDate = format(date, "HH:mm");
-    setEndTime(format(date, "HH:mm"));
+    if (tasks.length !== lengthOfActivities || !visitNote) {
+      setEndVisitError(true);
+      setTimeout(() => {
+        setEndVisitError(false);
+      }, 5000);
 
-    localStorage.setItem(`endTime ${params.id}${visitId}`, formattedDate);
-    localStorage.setItem(`visitStartedStatus ${params.id}${visitId}`, false);
-    localStorage.setItem(
-      `startEndButton ${params.id}${visitId}`,
-      !visitStartedStatus
+      return;
+    }
+
+    const location = navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const date = new Date();
+        let formattedDate = format(date, "HH:mm");
+        setEndTime(format(date, "HH:mm"));
+
+        localStorage.setItem(`endTime ${params.id}${visitId}`, formattedDate);
+        localStorage.setItem(
+          `visitStartedStatus ${params.id}${visitId}`,
+          false
+        );
+        localStorage.setItem(
+          `startEndButton ${params.id}${visitId}`,
+          !visitStartedStatus
+        );
+        localStorage.setItem(`disableBtn ${params.id}${visitId}`, disableBtn);
+        setVisitStartedStatus(false);
+        setDisableBtn(true);
+
+        handleSubmit(position.coords.latitude, position.coords.longitude);
+        //setTimeout(deleteLocalStorageItems, 9000);
+      },
+      (error) => {
+        console.log(error.message);
+        setLocationPermissionError(true);
+        setTimeout(() => {
+          setLocationPermissionError(false);
+        }, 5000);
+      },
+      {
+        enableHighAccuracy: true,
+      }
     );
-    localStorage.setItem(`disableBtn ${params.id}${visitId}`, disableBtn);
-    setVisitStartedStatus(false);
-    setDisableBtn(true);
-
-    handleSubmit();
-    //setTimeout(deleteLocalStorageItems, 9000);
+    return location;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (lat, lon) => {
     const date = new Date();
     if (!visitNote || !visitId || !startTime || !activities) return;
     let data = {
@@ -113,7 +141,8 @@ function ServiceUserActivities({ currentUser }) {
       visitId: visitId,
       carerId: currentUser._id,
       serviceuserId: params.id,
-
+      latitude: lat,
+      longitude: lon,
       activities,
     };
 
@@ -141,7 +170,11 @@ function ServiceUserActivities({ currentUser }) {
     );
 
     let disableBtn = localStorage.getItem(`disableBtn ${params.id}${visitId}`);
+    let activitiesLength = JSON.parse(
+      localStorage.getItem(`activitiesLength ${params.id}${visitId}`)
+    );
 
+    setLengthOfActivities(activitiesLength);
     setDisableBtn(disableBtn);
     setStartEndButton(startEndButton);
     setVisitStartedStatus(visitStartedStatus);
@@ -213,19 +246,34 @@ function ServiceUserActivities({ currentUser }) {
     }
 
     setActivities({ ...activities, [key]: e.target.value });
+    setLengthOfActivities(
+      Object.keys({ ...activities, [key]: e.target.value }).length
+    );
+    localStorage.setItem(
+      `activitiesLength ${params.id}${visitId}`,
+      Object.keys({ ...activities, [key]: e.target.value }).length
+    );
   };
-
   return (
     <div className="container">
       <i className="fa-solid fa-arrow-left mt-2" onClick={goToPreviousPage}></i>
       <span>{startTime ? `${startTime} -` : ""}</span>{" "}
-      <span>{endTime ? endTime : ""}</span>
+      <span>{endTime ? endTime : ""}</span>{" "}
+      <span style={{ color: "red" }}>
+        {" "}
+        {locationPermissionError
+          ? "accept location permission before starting visit"
+          : ""}
+      </span>
+      <span style={{ color: "red" }}>
+        {endVisitError ? "complete all fields or tasks" : ""}{" "}
+      </span>
       <div className="row  d-flex  justify-content-center mt-4 ">
         <div className="col-md-5">
           <form onSubmit={handleSubmit}>
             {" "}
             <div className="form-group">
-              <label htmlFor="exampleInputTitle">Visit note</label>
+              <label htmlFor="exampleInputTitle">Visit note </label>
               <input
                 type="text"
                 className="form-control"
@@ -233,14 +281,6 @@ function ServiceUserActivities({ currentUser }) {
                 onChange={(e) => setVisitNote(e.target.value)}
                 defaultValue={visitNote}
               />
-
-              {/* <button
-                type="submit"
-                className="btn btn-primary mt-1"
-                // disabled={!visitStartedStatus}
-              >
-                Submit
-              </button> */}
             </div>
           </form>
         </div>
