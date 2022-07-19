@@ -6,40 +6,18 @@ import { connect } from "react-redux";
 import { logOutUser, fetchUserData } from "../../redux/user/user-action";
 import "./carerpage.style.scss";
 import axios from "axios";
-import haversine from "haversine-distance";
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
-function CarerPage({ currentUser, logOutUser, fetchUserData }) {
+function CarerPage({ currentUser,  }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   let navigate = useNavigate();
 
-  const getCarerLocation = () => {
-    const watchId = navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log("LAT", position.coords.latitude);
-        console.log("LONG", position.coords.longitude);
 
-        // const a = {
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        // };
-        // const b = { latitude:55.92356, longitude: -3.289782 };
-        // console.log("CALC", haversine(a, b));
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      {
-        enableHighAccuracy: true,
-      }
-    );
-    
-  };
 
   useEffect(() => {
-    //getCarerLocation();
+    
     let mounted = true;
 
     if (currentUser.role === "admin") {
@@ -78,6 +56,8 @@ function CarerPage({ currentUser, logOutUser, fetchUserData }) {
       mounted = false;
     };
   }, [currentUser, navigate, selectedDate]);
+
+  console.log(serviceUsersVisit)
 
   let itemsToRender;
   if (serviceUsersVisit) {

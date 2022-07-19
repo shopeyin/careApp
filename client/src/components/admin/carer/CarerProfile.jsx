@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 
 import { format } from "date-fns";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import Visit from "../visit/Visit";
+import AddVisit from "../visit/AddVisit";
 import AddServiceUserToVisit from "../visit/AddServiceUserToVisit";
 import DeleteServiceUserFromVisit from "../visit/DeleteServiceUserFromVisit";
 import VisitInformation from "../visit/VisitInformation";
@@ -12,7 +11,6 @@ import { useParams } from "react-router-dom";
 
 import axios from "axios";
 const URL = "http://127.0.0.1:1000/api/v1/visit";
-const VISIT_URL = "http://127.0.0.1:1000/api/v1/visitInformation";
 
 function CarerProfile({ serviceUsers }) {
   const [visits, setVisits] = React.useState([]);
@@ -73,7 +71,7 @@ function CarerProfile({ serviceUsers }) {
       </div>
       <div className="row ">
         <div className="col-md-5">
-          <Visit
+          <AddVisit
             carerId={carer._id}
             reMountComponent={reMountComponent}
             handleDeleteVisit={handleDeleteVisit}
@@ -84,7 +82,9 @@ function CarerProfile({ serviceUsers }) {
         <div className="col-md-5">
           <h3>
             {carer ? carer.name : ""} has{" "}
-            {visits.visitLength > 1 ? `${visits.visitLength}  visits` : `${visits.visitLength}  visit`}
+            {visits.visitLength > 1
+              ? `${visits.visitLength}  visits`
+              : `${visits.visitLength}  visit`}
           </h3>
         </div>
       </div>
@@ -94,10 +94,17 @@ function CarerProfile({ serviceUsers }) {
             <div key={item._id} className="row mt-4">
               <div className="col col-md-2">
                 {" "}
-                <VisitInformation
-                  visitId={item._id}
-                  dateOfVisit={format(new Date(item.dateOfVisit), "yyyy-MM-dd")}
-                />
+                {item.dateOfVisit ? (
+                  <VisitInformation
+                    visitId={item._id}
+                    dateOfVisit={format(
+                      new Date(item.dateOfVisit),
+                      "yyyy-MM-dd"
+                    )}
+                  />
+                ) : (
+                  <VisitInformation visitId={item._id} />
+                )}
               </div>
               <div className="col-12 col-md-2  ">
                 <DeleteServiceUserFromVisit
@@ -117,7 +124,6 @@ function CarerProfile({ serviceUsers }) {
                 />
               </div>
               <div className="col col-sm-1 ">
-           
                 <i
                   className="fa-solid fa-trash-can mt-2"
                   onClick={() => {

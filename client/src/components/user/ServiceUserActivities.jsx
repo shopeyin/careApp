@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import haversine from "haversine-distance";
 import { fetchAllTaskofaServiceUser } from "../admin/task/taskFunctions";
+import { fetchServiceUsers } from "../../redux/serviceUser/serviceuser-action";
 import { format } from "date-fns";
 import { addVisitInfo } from "./utils";
 import { useParams, useNavigate } from "react-router-dom";
 import StartVisit from "./StartVisit";
 import EndVisit from "./EndVisit";
-function ServiceUserActivities({ currentUser }) {
+
+function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers }) {
+ 
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
   const [activities, setActivities] = useState({});
@@ -23,8 +27,17 @@ function ServiceUserActivities({ currentUser }) {
   const [endVisitError, setEndVisitError] = useState(false);
 
   const params = useParams();
-
   const navigate = useNavigate();
+
+  let serviceUser;
+
+  useSelector((state) => {
+    const found = state.serviceUsers.serviceUsers.find(
+      (element) => element._id === params.id
+    );
+
+    serviceUser = found;
+  });
 
   let visitId = localStorage.getItem("visitId");
 
@@ -42,7 +55,7 @@ function ServiceUserActivities({ currentUser }) {
     localStorage.removeItem(`noDISABLED ${params.id} ${visitId}`);
     localStorage.removeItem(`yesDISABLED ${params.id} ${visitId}`);
 
-    console.log("deleting");
+    console.log("deleted");
   };
 
   const goToPreviousPage = () => {
@@ -52,15 +65,8 @@ function ServiceUserActivities({ currentUser }) {
   const startTimeFunction = async () => {
     const location = navigator.geolocation.getCurrentPosition(
       (pos) => {
-        console.log(pos);
-        // setLatitude(position.coords.latitude);
-        // setLongitude(position.coords.longitude);
-        // const a = {
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        // };
-        // const b = { latitude:55.92356, longitude: -3.289782 };
-        // console.log("CALC", haversine(a, b));
+       
+       
 
         const date = new Date();
         let formattedDate = format(date, "HH:mm");
@@ -98,6 +104,17 @@ function ServiceUserActivities({ currentUser }) {
 
     const location = navigator.geolocation.getCurrentPosition(
       (position) => {
+        const a = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        const b = {
+          latitude: serviceUser.latitude,
+          longitude: serviceUser.longitude,
+        };
+      
+        console.log("CALC", haversine(a, b));
+
         const date = new Date();
         let formattedDate = format(date, "HH:mm");
         setEndTime(format(date, "HH:mm"));
@@ -115,7 +132,7 @@ function ServiceUserActivities({ currentUser }) {
         setVisitStartedStatus(false);
         setDisableBtn(true);
 
-        handleSubmit(position.coords.latitude, position.coords.longitude);
+        handleSubmit(haversine(a, b));
         //setTimeout(deleteLocalStorageItems, 9000);
       },
       (error) => {
@@ -132,7 +149,7 @@ function ServiceUserActivities({ currentUser }) {
     return location;
   };
 
-  const handleSubmit = (lat, lon) => {
+  const handleSubmit = (diffInDistance) => {
     const date = new Date();
     if (!visitNote || !visitId || !startTime || !activities) return;
     let data = {
@@ -141,9 +158,9 @@ function ServiceUserActivities({ currentUser }) {
       visitId: visitId,
       carerId: currentUser._id,
       serviceuserId: params.id,
-      latitude: lat,
-      longitude: lon,
+      diffInDistance,
       activities,
+      serviceUserName: serviceUser.name,
     };
 
     addVisitInfo(data);
@@ -207,6 +224,7 @@ function ServiceUserActivities({ currentUser }) {
     };
 
     fetchTask();
+    fetchServiceUsers()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
@@ -369,7 +387,14 @@ const mapStateToProps = (state) => {
   return {
     loading: state.carers.loading,
     currentUser: state.user.currentUser,
+    serviceUsers: state.serviceUsers.serviceUsers,
   };
 };
 
-export default connect(mapStateToProps)(ServiceUserActivities);
+const mapDispatchToProps = (dispatch) => ({
+ 
+  fetchServiceUsers: () => dispatch(fetchServiceUsers()),
+ 
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(ServiceUserActivities);

@@ -14,7 +14,7 @@ function VisitInformation({ visitId, dateOfVisit }) {
       const {
         data: { data },
       } = visitInfo;
-      console.log(data.visit);
+    
       setVisitInfo(data.visit);
     } catch (error) {
       console.log(error);
@@ -28,7 +28,7 @@ function VisitInformation({ visitId, dateOfVisit }) {
   const handleShow = () => {
     setShow(true);
   };
-  console.log(visitInfo);
+ 
   return (
     <>
       <Button
@@ -50,7 +50,7 @@ function VisitInformation({ visitId, dateOfVisit }) {
         backdrop="static"
       >
         <Modal.Header>
-          <Modal.Title> visit Information </Modal.Title>
+          <Modal.Title> visit Information {dateOfVisit} </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {visitInfo.map((visit) => {
@@ -59,6 +59,8 @@ function VisitInformation({ visitId, dateOfVisit }) {
                 {" "}
                 Visit Note: {visit.visitNote}
                 <p> Visit Time: {visit.time}</p>
+                <p> ServiceUserName: {visit.serviceUserName}</p>
+                <p> Difference In Distance: {visit.diffInDistance}</p>
                 {Object.keys(visit.activities).map((key, i) => {
                   return (
                     <div key={i}>

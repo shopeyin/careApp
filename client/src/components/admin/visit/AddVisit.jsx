@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { addHours } from "date-fns";
@@ -9,13 +9,17 @@ import axios from "axios";
 
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit/";
 
-function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
+function AddVisit({
+  carerId,
+  serviceUsers,
+  reMountComponent,
+  handleDeleteVisit,
+}) {
   const [visit, setVisit] = React.useState([]);
-
   const [show, setShow] = React.useState(false);
-
   const [serviceUserInfo, setServiceUserInfo] = React.useState([]);
   const [selectedDate, setSelectedDate] = React.useState(null);
+  const [disableBtn, setDisableBtn] = React.useState(true);
 
   let dataId = {
     careruser: carerId,
@@ -26,6 +30,14 @@ function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
 
     dateOfVisit: addHours(selectedDate, 1),
   };
+
+  useEffect(() => {
+    if (serviceUserInfo && selectedDate) {
+      setDisableBtn(false);
+    } else {
+      setDisableBtn(true);
+    }
+  }, [selectedDate, serviceUserInfo, disableBtn]);
 
   const handleSubmit = async (visitId) => {
     await axios.post(
@@ -60,9 +72,7 @@ function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
     setShow(true);
     createVisit();
   };
-  console.log(serviceUserInfo);
-  console.log("VISIT ERE", visit);
- 
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -78,6 +88,7 @@ function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
       >
         <Modal.Header>
           <Modal.Title>Modal heading {visit ? visit._id : ""} </Modal.Title>
+         
         </Modal.Header>
         <Modal.Body>
           {" "}
@@ -126,6 +137,7 @@ function Visit({ carerId, serviceUsers, reMountComponent, handleDeleteVisit }) {
             Close
           </Button>
           <Button
+            disabled={disableBtn ? disableBtn : ""}
             variant="primary"
             onClick={() => {
               handleSubmit(visit._id);
@@ -144,4 +156,4 @@ const mapStateToProps = (state) => ({
   serviceUsers: state.serviceUsers.serviceUsers,
 });
 // Connect Redux to React
-export default connect(mapStateToProps)(Visit);
+export default connect(mapStateToProps)(AddVisit);

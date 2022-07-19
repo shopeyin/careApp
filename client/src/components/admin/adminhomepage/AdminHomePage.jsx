@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Routes, Route, useNavigate, Redirect } from "react-router-dom";
+import { Link, Routes, Route, useNavigate,  } from "react-router-dom";
 
 import { connect } from "react-redux";
 import ServiceUsers from "./../serviceuser/ServiceUsers";
@@ -17,10 +17,10 @@ import "./adminhomepage.style.scss";
 function AdminHomePage({
   fetchCarers,
   fetchServiceUsers,
-  logOutUser,
+ 
   currentUser,
 }) {
-  console.log("here", currentUser);
+ 
   const navigate = useNavigate();
 
   const goToPreviousPage = () => {
@@ -92,7 +92,7 @@ function AdminHomePage({
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  
   return {
     loading: state.carers.loading,
     currentUser: state.user.currentUser,
