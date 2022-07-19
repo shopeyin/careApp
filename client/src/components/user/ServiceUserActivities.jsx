@@ -51,8 +51,8 @@ function ServiceUserActivities({ currentUser }) {
 
   const startTimeFunction = async () => {
     const location = navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position);
+      (pos) => {
+        console.log(pos);
         // setLatitude(position.coords.latitude);
         // setLongitude(position.coords.longitude);
         // const a = {
