@@ -9,8 +9,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import StartVisit from "./StartVisit";
 import EndVisit from "./EndVisit";
 
-function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers }) {
- 
+function ServiceUserActivities({
+  currentUser,
+  serviceUsers,
+  fetchServiceUsers,
+}) {
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
   const [activities, setActivities] = useState({});
@@ -65,9 +68,6 @@ function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers })
   const startTimeFunction = async () => {
     const location = navigator.geolocation.getCurrentPosition(
       (pos) => {
-       
-       
-
         const date = new Date();
         let formattedDate = format(date, "HH:mm");
         setStartTime(formattedDate);
@@ -112,7 +112,7 @@ function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers })
           latitude: serviceUser.latitude,
           longitude: serviceUser.longitude,
         };
-      
+
         console.log("CALC", haversine(a, b));
 
         const date = new Date();
@@ -133,7 +133,7 @@ function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers })
         setDisableBtn(true);
 
         handleSubmit(haversine(a, b));
-        //setTimeout(deleteLocalStorageItems, 9000);
+        setTimeout(deleteLocalStorageItems, 604800000);
       },
       (error) => {
         console.log(error.message);
@@ -224,7 +224,7 @@ function ServiceUserActivities({ currentUser, serviceUsers, fetchServiceUsers })
     };
 
     fetchTask();
-    fetchServiceUsers()
+    fetchServiceUsers();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
@@ -392,9 +392,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
- 
   fetchServiceUsers: () => dispatch(fetchServiceUsers()),
- 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(ServiceUserActivities);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServiceUserActivities);

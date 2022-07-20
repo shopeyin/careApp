@@ -8,16 +8,13 @@ import "./carerpage.style.scss";
 import axios from "axios";
 const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
 
-function CarerPage({ currentUser,  }) {
+function CarerPage({ currentUser }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   let navigate = useNavigate();
 
-
-
   useEffect(() => {
-    
     let mounted = true;
 
     if (currentUser.role === "admin") {
@@ -57,7 +54,7 @@ function CarerPage({ currentUser,  }) {
     };
   }, [currentUser, navigate, selectedDate]);
 
-  console.log(serviceUsersVisit)
+  console.log(serviceUsersVisit);
 
   let itemsToRender;
   if (serviceUsersVisit) {
@@ -72,12 +69,7 @@ function CarerPage({ currentUser,  }) {
               <div className="card ">
                 <div className="card-body ">
                   <h4 className="card-title link-color"> {serviceUser.name}</h4>
-                  <h5 className="card-subtitle mb-2 text-muted link-color">
-                    Visit 1 hour
-                  </h5>
-                  <h5 className="card-subtitle mb-2 text-muted link-color">
-                    6:30-07:30
-                  </h5>
+
                   <h6 className="card-text link-color ">
                     {serviceUser.address}
                   </h6>

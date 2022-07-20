@@ -20,6 +20,7 @@ function AddVisit({
   const [serviceUserInfo, setServiceUserInfo] = React.useState([]);
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [disableBtn, setDisableBtn] = React.useState(true);
+  const [time, setTime] = React.useState(new Date());
 
   let dataId = {
     careruser: carerId,
@@ -72,7 +73,12 @@ function AddVisit({
     setShow(true);
     createVisit();
   };
+  
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
 
+  console.log(time);
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -88,7 +94,6 @@ function AddVisit({
       >
         <Modal.Header>
           <Modal.Title>Modal heading {visit ? visit._id : ""} </Modal.Title>
-         
         </Modal.Header>
         <Modal.Body>
           {" "}
@@ -105,7 +110,7 @@ function AddVisit({
           All the service users{" "}
           {serviceUsers.map((serviceUser) => {
             return (
-              <p key={serviceUser._id}>
+              <div key={serviceUser._id}>
                 {serviceUser.name}{" "}
                 <input
                   type="checkbox"
@@ -122,7 +127,7 @@ function AddVisit({
                   }}
                   value={serviceUserInfo}
                 />
-              </p>
+                          </div>
             );
           })}
         </Modal.Body>

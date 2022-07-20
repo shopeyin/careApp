@@ -52,15 +52,18 @@ function Navbar({ logOutUser, currentUser }) {
                   {" "}
                   Carers
                 </Link>
-                <Link
-                  to="admin/serviceusers"
-                  data-toggle="collapse"
-                  data-target="#navbarNav"
-                  className="link-color"
-                >
+                <p>
                   {" "}
-                  Serviceusers
-                </Link>
+                  <Link
+                    to="admin/serviceusers"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    className="link-color"
+                  >
+                    {" "}
+                    Serviceusers
+                  </Link>
+                </p>
               </div>
             ) : (
               ""

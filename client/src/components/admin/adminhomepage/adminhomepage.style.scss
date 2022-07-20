@@ -1,7 +1,7 @@
 .navigation{
    
     &__sidebar{
-        background-color: red;
+        background-color: lightgrey;
       
         @media screen and (max-width : 575px) {
                            display: none;
