@@ -22,7 +22,7 @@ function CreateServiceUser({ createNewServiceUser }) {
   useEffect(() => {
     if (postCode.length) {
       const fetchAddress = async () => {
-        console.log("fetch addressb called");
+       
         try {
           let address = await axios.get(
             `https://api.postcodes.io/postcodes/${postCode}`
@@ -69,12 +69,11 @@ function CreateServiceUser({ createNewServiceUser }) {
       longitude: serviceUserInformation.longitude,
     };
 
-    console.log(data);
+   
     createNewServiceUser(data);
     goToPreviousPage();
   };
 
-  console.log(serviceUserInformation);
   return (
     <div className="col-md-5">
       <form onSubmit={handleSubmit}>

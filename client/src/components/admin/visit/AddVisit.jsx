@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
-import { addHours } from "date-fns";
+import { addHours, format } from "date-fns";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,17 +14,25 @@ function AddVisit({
   serviceUsers,
   reMountComponent,
   handleDeleteVisit,
+  visits,
 }) {
+  console.log(visits, "here");
   const [visit, setVisit] = React.useState([]);
   const [show, setShow] = React.useState(false);
   const [serviceUserInfo, setServiceUserInfo] = React.useState([]);
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [disableBtn, setDisableBtn] = React.useState(true);
-  const [time, setTime] = React.useState(new Date());
 
   let dataId = {
     careruser: carerId,
   };
+
+  let formatdate =
+    format(new Date(selectedDate), "yyyy-MM-dd") + "T00:00:00.000Z";
+
+  const findUniqueVisit = visits.find(
+    ({ dateOfVisit }) => dateOfVisit === formatdate
+  );
 
   const updateVisitData = {
     serviceusersToVisit: serviceUserInfo,
@@ -33,12 +41,12 @@ function AddVisit({
   };
 
   useEffect(() => {
-    if (serviceUserInfo && selectedDate) {
+    if (serviceUserInfo.length && selectedDate && !findUniqueVisit) {
       setDisableBtn(false);
     } else {
       setDisableBtn(true);
     }
-  }, [selectedDate, serviceUserInfo, disableBtn]);
+  }, [selectedDate, serviceUserInfo, disableBtn, findUniqueVisit]);
 
   const handleSubmit = async (visitId) => {
     await axios.post(
@@ -46,7 +54,6 @@ function AddVisit({
 
       updateVisitData
     );
-    console.log(updateVisitData);
     reMountComponent();
   };
 
@@ -73,12 +80,9 @@ function AddVisit({
     setShow(true);
     createVisit();
   };
-  
-  function handleChange(event) {
-    console.log(event.target.value);
-  }
 
-  console.log(time);
+  console.log(serviceUserInfo);
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -93,7 +97,9 @@ function AddVisit({
         backdrop="static"
       >
         <Modal.Header>
-          <Modal.Title>Modal heading {visit ? visit._id : ""} </Modal.Title>
+          <Modal.Title>
+            Add visit...don't pick an already chosen date
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {" "}
@@ -127,7 +133,7 @@ function AddVisit({
                   }}
                   value={serviceUserInfo}
                 />
-                          </div>
+              </div>
             );
           })}
         </Modal.Body>

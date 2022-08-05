@@ -60,9 +60,8 @@ function SignIn({ login }) {
                   aria-describedby="TitleHelp"
                 />
 
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
+                <button type="submit" className="btn btn-primary mt-1">
+                  Submit</button>
               </div>
             </form>
           </div>

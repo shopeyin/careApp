@@ -2,10 +2,8 @@ import React, { useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  fetchServiceUsers,
-  BASE_URL,
-} from "../../../redux/serviceUser/serviceuser-action";
+import { fetchServiceUsers } from "../../../redux/serviceUser/serviceuser-action";
+import { BASE_URL } from "../../../App";
 import { reMount } from "../../../redux/remount/remount-action";
 import axios from "axios";
 
@@ -18,12 +16,11 @@ function ServiceUsers({
 }) {
   useEffect(() => {
     fetchServiceUsers();
-    
-  }, [reMountComponent]);
+  }, [fetchServiceUsers, reMountComponent]);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/${id}`);
+      await axios.delete(`${BASE_URL}/serviceusers/${id}`);
       reMount();
     } catch (error) {
       console.log(error);
@@ -34,13 +31,15 @@ function ServiceUsers({
   if (serviceUsers) {
     itemsToRender = serviceUsers.map((serviceuser) => {
       return (
-        
         <div
           className="card m-2 link-color"
           style={{ width: "30rem", height: "3.5rem" }}
           key={serviceuser._id}
         >
-          <Link to={`${serviceuser._id}`} className="link-color"> {serviceuser.name}</Link>
+          <Link to={`${serviceuser._id}`} className="link-color">
+            {" "}
+            {serviceuser.name}
+          </Link>
           <Link
             to={`edit/${serviceuser._id}`}
             style={{ position: "relative", top: "-2.5rem", left: "15rem" }}
@@ -62,9 +61,11 @@ function ServiceUsers({
   }
 
   return (
-    <div className="row d-flex align-items-center inneradminpage " >
+    <div className="row d-flex align-items-center inneradminpage ">
       <div className="col-md-6 link-color">
-        <Link to="add-serviceuser" className="link-color">Add Service User</Link>
+        <Link to="add-serviceuser" className="link-color">
+          Add Service User
+        </Link>
         {itemsToRender}
       </div>
     </div>

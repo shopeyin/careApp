@@ -14,7 +14,7 @@ function VisitInformation({ visitId, dateOfVisit }) {
       const {
         data: { data },
       } = visitInfo;
-    
+
       setVisitInfo(data.visit);
     } catch (error) {
       console.log(error);
@@ -28,7 +28,7 @@ function VisitInformation({ visitId, dateOfVisit }) {
   const handleShow = () => {
     setShow(true);
   };
- 
+
   return (
     <>
       <Button
@@ -60,15 +60,23 @@ function VisitInformation({ visitId, dateOfVisit }) {
                 Visit Note: {visit.visitNote}
                 <p> Visit Time: {visit.time}</p>
                 <p> ServiceUserName: {visit.serviceUserName}</p>
-                <p> Difference In Distance: {visit.diffInDistance}</p>
-                {Object.keys(visit.activities).map((key, i) => {
-                  return (
-                    <div key={i}>
-                      {key}--
-                      {visit.activities[key]}
-                    </div>
-                  );
-                })}
+                <p>
+                  {" "}
+                  Difference In Distance:{" "}
+                  {visit.diffInDistance ? visit.diffInDistance : ""}
+                </p>
+                {/* {visit.activities ? "yes" : "no"} */}
+                Activities:{" "}
+                {visit.activities
+                  ? Object.keys(visit.activities).map((key, i) => {
+                      return (
+                        <div key={i}>
+                          {key}--
+                          {visit.activities[key]}
+                        </div>
+                      );
+                    })
+                  : ""}
                 <p> ---------------------</p>
               </div>
             );

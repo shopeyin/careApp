@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 import { format } from "date-fns";
 import { connect } from "react-redux";
 import AddVisit from "../visit/AddVisit";
@@ -8,9 +7,8 @@ import AddServiceUserToVisit from "../visit/AddServiceUserToVisit";
 import DeleteServiceUserFromVisit from "../visit/DeleteServiceUserFromVisit";
 import VisitInformation from "../visit/VisitInformation";
 import { useParams } from "react-router-dom";
-
+import { BASE_URL } from "../../../App";
 import axios from "axios";
-const URL = "http://127.0.0.1:1000/api/v1/visit";
 
 function CarerProfile({ serviceUsers }) {
   const [visits, setVisits] = React.useState([]);
@@ -34,7 +32,7 @@ function CarerProfile({ serviceUsers }) {
 
   const handleDeleteVisit = async (id) => {
     try {
-      await axios.delete(`${URL}/${id}`);
+      await axios.delete(`${BASE_URL}/visit/${id}`);
       reMountComponent();
     } catch (error) {
       console.log(error);
@@ -42,24 +40,30 @@ function CarerProfile({ serviceUsers }) {
   };
 
   React.useEffect(() => {
-    console.log("  carer profilke mounting");
     const fetchAllCarerVisits = async () => {
       try {
-        const carerVisit = await axios.get(`${URL}/${params.carerId}`);
+        const carerVisit = await axios.get(
+          `${BASE_URL}/visit/${params.carerId}`
+        );
 
         const {
           data: { data },
         } = carerVisit;
-        console.log(data);
 
-        setVisits(data);
+        const uniqueVisit = [
+          ...new Map(
+            data.visit.map((item) => [item["dateOfVisit"], item])
+          ).values(),
+        ];
+
+        setVisits(uniqueVisit);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllCarerVisits();
   }, [params.carerId, reload]);
-  console.log(visits.visit);
+
   return (
     <>
       <div className="row mt-4">
@@ -75,6 +79,7 @@ function CarerProfile({ serviceUsers }) {
             carerId={carer._id}
             reMountComponent={reMountComponent}
             handleDeleteVisit={handleDeleteVisit}
+            visits={visits}
           />
         </div>
       </div>
@@ -82,18 +87,19 @@ function CarerProfile({ serviceUsers }) {
         <div className="col-md-5">
           <h3>
             {carer ? carer.name : ""} has{" "}
-            {visits.visitLength > 1
-              ? `${visits.visitLength}  visits`
-              : `${visits.visitLength}  visit`}
+            {visits.length > 1
+              ? `${visits.length}  visits`
+              : `${visits.length}  visit`}
           </h3>
         </div>
       </div>
-      {visits.visit &&
-        visits.visit.map((item) => {
+      {visits &&
+        visits.map((item) => {
           return (
             <div key={item._id} className="row mt-4">
               <div className="col col-md-2">
                 {" "}
+               
                 {item.dateOfVisit ? (
                   <VisitInformation
                     visitId={item._id}

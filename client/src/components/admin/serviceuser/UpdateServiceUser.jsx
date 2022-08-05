@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../../../redux/serviceUser/serviceuser-action";
+import { BASE_URL } from "../../../App";
 
 function UpdateServiceUser() {
   const [serviceUserName, setserviceUserName] = useState("");
@@ -17,7 +17,7 @@ function UpdateServiceUser() {
 
   useEffect(() => {
     async function getServiceUserData() {
-      let serviceUserData = await axios.get(`${BASE_URL}/${params.id}`);
+      let serviceUserData = await axios.get(`${BASE_URL}/serviceusers/${params.id}`);
       const { data } = serviceUserData;
 
       setserviceUserName(data.data.serviceUser.name);
@@ -37,7 +37,7 @@ function UpdateServiceUser() {
     };
 
     try {
-      await axios.patch(`${BASE_URL}/${params.id}`, data);
+      await axios.patch(`${BASE_URL}/serviceusers/${params.id}`, data);
       goToPreviousPage();
     } catch (error) {
       console.log(error);

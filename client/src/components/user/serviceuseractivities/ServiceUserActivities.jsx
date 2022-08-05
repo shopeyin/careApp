@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import haversine from "haversine-distance";
-import { fetchAllTaskofaServiceUser } from "../admin/task/taskFunctions";
-import { fetchServiceUsers } from "../../redux/serviceUser/serviceuser-action";
+import { fetchAllTaskofaServiceUser } from "../../admin/task/taskFunctions";
+import { fetchServiceUsers } from "../../../redux/serviceUser/serviceuser-action";
 import { format } from "date-fns";
-import { addVisitInfo } from "./utils";
+import { addVisitInfo } from "../utils";
 import { useParams, useNavigate } from "react-router-dom";
 import StartVisit from "./StartVisit";
 import EndVisit from "./EndVisit";
 
-function ServiceUserActivities({
-  currentUser,
-  serviceUsers,
-  fetchServiceUsers,
-}) {
+function ServiceUserActivities({ currentUser, fetchServiceUsers }) {
   const [tasks, setTasks] = useState([]);
   const [visitNote, setVisitNote] = useState([]);
   const [activities, setActivities] = useState({});
@@ -60,6 +56,8 @@ function ServiceUserActivities({
 
     console.log("deleted");
   };
+
+
 
   const goToPreviousPage = () => {
     navigate(-1);
@@ -214,7 +212,6 @@ function ServiceUserActivities({
   };
 
   useEffect(() => {
-    console.log("component mounting");
 
     getInitialVisitValues();
     getBtnStatus();
@@ -383,9 +380,8 @@ function ServiceUserActivities({
   );
 }
 const mapStateToProps = (state) => {
-  console.log(state);
+ 
   return {
-    loading: state.carers.loading,
     currentUser: state.user.currentUser,
     serviceUsers: state.serviceUsers.serviceUsers,
   };
@@ -399,3 +395,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ServiceUserActivities);
+

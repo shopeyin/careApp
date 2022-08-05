@@ -3,10 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { connect } from "react-redux";
-import { logOutUser, fetchUserData } from "../../redux/user/user-action";
+import { BASE_URL } from "../../../App";
 import "./carerpage.style.scss";
 import axios from "axios";
-const BASE_URL = "http://127.0.0.1:1000/api/v1/visit";
+
 
 function CarerPage({ currentUser }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
@@ -20,6 +20,7 @@ function CarerPage({ currentUser }) {
     if (currentUser.role === "admin") {
       navigate("/admin");
     }
+
     let visitDate = {
       dateOfVisit:
         format(new Date(selectedDate), "yyyy-MM-dd") + "T00:00:00.000+00:00",
@@ -28,7 +29,7 @@ function CarerPage({ currentUser }) {
     const fetchVisit = async () => {
       try {
         const visitData = await axios.post(
-          `${BASE_URL}/${currentUser._id}`,
+          `${BASE_URL}/visit/${currentUser._id}`,
           visitDate
         );
         const {
@@ -53,8 +54,6 @@ function CarerPage({ currentUser }) {
       mounted = false;
     };
   }, [currentUser, navigate, selectedDate]);
-
-  console.log(serviceUsersVisit);
 
   let itemsToRender;
   if (serviceUsersVisit) {
@@ -114,17 +113,10 @@ function CarerPage({ currentUser }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  logOutUser: () => dispatch(logOutUser()),
-  fetchUserData: () => dispatch(fetchUserData()),
-});
-
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    loading: state.carers.loading,
     currentUser: state.user.currentUser,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarerPage);
+export default connect(mapStateToProps)(CarerPage);

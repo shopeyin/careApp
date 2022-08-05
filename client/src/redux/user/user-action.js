@@ -1,7 +1,6 @@
 import UserActionTypes from "./user-type";
 import axios from "axios";
-
-export const BASE_URL = "http://127.0.0.1:1000/api/v1/carers/login";
+import { BASE_URL } from "../../App";
 
 export const setCurrentUser = (user) => ({
   type: UserActionTypes.SET_CURRENT_USER,
@@ -14,7 +13,10 @@ export const logOutUser = () => ({
 export function login(userdata) {
   return async (dispatch) => {
     try {
-      const loggedInUser = await axios.post(BASE_URL, userdata);
+      const loggedInUser = await axios.post(
+        `${BASE_URL}/carers/login`,
+        userdata
+      );
       console.log(loggedInUser);
       let { data } = loggedInUser;
 
@@ -36,10 +38,7 @@ export const fetchUserData = () => {
       },
     };
     try {
-      const { data } = await axios.get(
-        `http://127.0.0.1:1000/api/v1/private`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/private`, config);
       console.log(data.data);
       dispatch(setCurrentUser(data.data));
     } catch (error) {

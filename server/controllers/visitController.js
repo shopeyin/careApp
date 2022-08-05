@@ -43,7 +43,7 @@ exports.addServiceUserToVisit = async (req, res) => {
 
 exports.deleteServiceUserFromVisit = async (req, res) => {
 
-  console.log("Delete rout called")
+  
   try {
     await Visit.findByIdAndUpdate(req.params.id, {
       $pull: { serviceusersToVisit: req.body.serviceusersToVisit },
