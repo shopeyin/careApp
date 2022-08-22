@@ -1,61 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
-import { connect } from "react-redux";
 import { BASE_URL } from "../../../App";
-import "./carerpage.style.scss";
+import Visit from "./Visit";
 import axios from "axios";
+import { fetchVisit } from "../utils";
 
-
-function CarerPage({ currentUser }) {
+function CarerVisits({ currentUser }) {
   const [serviceUsersVisit, setServiceUsersVisit] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  let navigate = useNavigate();
-
   useEffect(() => {
     let mounted = true;
-
-    if (currentUser.role === "admin") {
-      navigate("/admin");
-    }
 
     let visitDate = {
       dateOfVisit:
         format(new Date(selectedDate), "yyyy-MM-dd") + "T00:00:00.000+00:00",
     };
 
-    const fetchVisit = async () => {
-      try {
-        const visitData = await axios.post(
-          `${BASE_URL}/visit/${currentUser._id}`,
-          visitDate
-        );
-        const {
-          data: {
-            data: { visit },
-          },
-        } = visitData;
-        if (mounted) {
-          localStorage.setItem("visitId", visit[0]._id);
+    const fetchVisitData = async () => {
+      let visit = await fetchVisit(currentUser._id, visitDate);
+      console.log(visit); //prototype = promise, promise state = fulfilled, promise Result = [1,2,3]
+      // visit.then(v=>console.log(v))
 
-          setServiceUsersVisit(visit[0].serviceusersToVisit);
-        }
-      } catch (err) {
+      if (visit.length === 0) {
         setServiceUsersVisit([]);
-        console.log(err.message);
+        return;
+      }
+      if (mounted) {
+        localStorage.setItem("visitId", visit[0]._id);
+
+        setServiceUsersVisit(visit[0].serviceusersToVisit);
       }
     };
+    fetchVisitData();
+    // const fetchVisit = async () => {
+    //   try {
+    //     const visitData = await axios.post(
+    //       `${BASE_URL}/visit/${currentUser._id}`,
+    //       visitDate
+    //     );
+    //     console.log(visitData);
+    //     const {
+    //       data: {
+    //         data: { visit },
+    //       },
+    //     } = visitData;
 
-    fetchVisit();
+    //     console.log(visit);
+
+    //     if (mounted) {
+    //       localStorage.setItem("visitId", visit[0]._id);
+
+    //       setServiceUsersVisit(visit[0].serviceusersToVisit);
+    //     }
+    //   } catch (err) {
+    //     setServiceUsersVisit([]);
+    //     console.log(err.message);
+    //   }
+    // };
+
+    // fetchVisit();
 
     return () => {
       mounted = false;
     };
-  }, [currentUser, navigate, selectedDate]);
+  }, [currentUser, selectedDate]);
 
   let itemsToRender;
+
   if (serviceUsersVisit) {
     itemsToRender = serviceUsersVisit.map((serviceUser) => {
       return (
@@ -80,7 +94,6 @@ function CarerPage({ currentUser }) {
       );
     });
   }
-
   return (
     <div className="container-fluid p-0 ">
       <div className="row  d-flex  justify-content-center mt-4 ">
@@ -96,27 +109,13 @@ function CarerPage({ currentUser }) {
           />
         </div>
       </div>
-      {serviceUsersVisit && serviceUsersVisit.length ? (
-        itemsToRender
-      ) : (
-        <div className="row mt-3 d-flex  justify-content-center">
-          <div className="col-8 col-sm-4 ">
-            <div className="card">
-              <div className="card-body text-center">
-                No visit on {format(new Date(selectedDate), "yyyy-MM-dd")}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Visit
+        serviceUsersVisit={serviceUsersVisit}
+        itemsToRender={itemsToRender}
+        selectedDate={selectedDate}
+      />
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.user.currentUser,
-  };
-};
-
-export default connect(mapStateToProps)(CarerPage);
+export default CarerVisits;

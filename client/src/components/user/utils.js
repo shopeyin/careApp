@@ -10,4 +10,22 @@ export const addVisitInfo = async (data) => {
   }
 };
 
+export const fetchVisit = async (currentUserId, visitDate) => {
+  console.log(axios);
+  try {
+    const visitData = await axios.post(
+      `${BASE_URL}/visit/${currentUserId}`,
+      visitDate
+    );
+    const {
+      data: {
+        data: { visit },
+      },
+    } = visitData;
 
+    console.log(visit);
+    return visit;
+  } catch (err) {
+    return err;
+  }
+};

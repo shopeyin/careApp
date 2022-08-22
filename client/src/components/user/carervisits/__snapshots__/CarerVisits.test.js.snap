@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`carer visit component calls fetch visit api 1`] = `
+<div
+  className="container-fluid p-0 "
+>
+  <div
+    className="row  d-flex  justify-content-center mt-4 "
+  >
+    <div
+      className="col-8 col-sm-4  text-center"
+    >
+       
+      <r
+        allowSameDay={false}
+        customTimeInput={null}
+        dateFormat="yyyy/MM/dd"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        enableTabLoop={true}
+        excludeScrollbar={true}
+        focusSelectedMonth={false}
+        minDate={2022-08-16T07:49:43.396Z}
+        monthsShown={1}
+        nextMonthAriaLabel="Next Month"
+        nextMonthButtonLabel="Next Month"
+        nextYearAriaLabel="Next Year"
+        nextYearButtonLabel="Next Year"
+        onBlur={[Function]}
+        onCalendarClose={[Function]}
+        onCalendarOpen={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        preventOpenOnFocus={false}
+        previousMonthAriaLabel="Previous Month"
+        previousMonthButtonLabel="Previous Month"
+        previousYearAriaLabel="Previous Year"
+        previousYearButtonLabel="Previous Year"
+        readOnly={false}
+        renderDayContents={[Function]}
+        scrollableMonthYearDropdown={true}
+        selected={2022-08-16T07:49:43.396Z}
+        selectsDisabledDaysInRange={false}
+        shouldCloseOnSelect={true}
+        showFourColumnMonthYearPicker={false}
+        showFullMonthYearPicker={false}
+        showMonthYearPicker={false}
+        showPopperArrow={true}
+        showPreviousMonths={false}
+        showQuarterYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={false}
+        showTwoColumnMonthYearPicker={false}
+        showYearDropdown={true}
+        showYearPicker={false}
+        strictParsing={false}
+        timeCaption="Time"
+        timeInputLabel="Time"
+        timeIntervals={30}
+        withPortal={false}
+        yearItemNumber={12}
+      />
+    </div>
+  </div>
+  <Visit
+    itemsToRender={Array []}
+    selectedDate={2022-08-16T07:49:43.396Z}
+    serviceUsersVisit={Array []}
+  />
+</div>
+`;
+
+exports[`carer visit component expect to render carervisit component 1`] = `
+<div
+  className="container-fluid p-0 "
+>
+  <div
+    className="row  d-flex  justify-content-center mt-4 "
+  >
+    <div
+      className="col-8 col-sm-4  text-center"
+    >
+       
+      <r
+        allowSameDay={false}
+        customTimeInput={null}
+        dateFormat="yyyy/MM/dd"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        enableTabLoop={true}
+        excludeScrollbar={true}
+        focusSelectedMonth={false}
+        minDate={2022-08-15T20:21:31.833Z}
+        monthsShown={1}
+        nextMonthAriaLabel="Next Month"
+        nextMonthButtonLabel="Next Month"
+        nextYearAriaLabel="Next Year"
+        nextYearButtonLabel="Next Year"
+        onBlur={[Function]}
+        onCalendarClose={[Function]}
+        onCalendarOpen={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        preventOpenOnFocus={false}
+        previousMonthAriaLabel="Previous Month"
+        previousMonthButtonLabel="Previous Month"
+        previousYearAriaLabel="Previous Year"
+        previousYearButtonLabel="Previous Year"
+        readOnly={false}
+        renderDayContents={[Function]}
+        scrollableMonthYearDropdown={true}
+        selected={2022-08-15T20:21:31.496Z}
+        selectsDisabledDaysInRange={false}
+        shouldCloseOnSelect={true}
+        showFourColumnMonthYearPicker={false}
+        showFullMonthYearPicker={false}
+        showMonthYearPicker={false}
+        showPopperArrow={true}
+        showPreviousMonths={false}
+        showQuarterYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={false}
+        showTwoColumnMonthYearPicker={false}
+        showYearDropdown={true}
+        showYearPicker={false}
+        strictParsing={false}
+        timeCaption="Time"
+        timeInputLabel="Time"
+        timeIntervals={30}
+        withPortal={false}
+        yearItemNumber={12}
+      />
+    </div>
+  </div>
+  <Visit
+    itemsToRender={Array []}
+    selectedDate={2022-08-15T20:21:31.496Z}
+    serviceUsersVisit={Array []}
+  />
+</div>
+`;
+
+exports[`carer visit component get carer visit 1`] = `
+<div
+  className="container-fluid p-0 "
+>
+  <div
+    className="row  d-flex  justify-content-center mt-4 "
+  >
+    <div
+      className="col-8 col-sm-4  text-center"
+    >
+       
+      <r
+        allowSameDay={false}
+        customTimeInput={null}
+        dateFormat="yyyy/MM/dd"
+        dateFormatCalendar="LLLL yyyy"
+        disabled={false}
+        disabledKeyboardNavigation={false}
+        dropdownMode="scroll"
+        enableTabLoop={true}
+        excludeScrollbar={true}
+        focusSelectedMonth={false}
+        minDate={2022-08-16T06:03:53.144Z}
+        monthsShown={1}
+        nextMonthAriaLabel="Next Month"
+        nextMonthButtonLabel="Next Month"
+        nextYearAriaLabel="Next Year"
+        nextYearButtonLabel="Next Year"
+        onBlur={[Function]}
+        onCalendarClose={[Function]}
+        onCalendarOpen={[Function]}
+        onChange={[Function]}
+        onClickOutside={[Function]}
+        onFocus={[Function]}
+        onInputClick={[Function]}
+        onInputError={[Function]}
+        onKeyDown={[Function]}
+        onMonthChange={[Function]}
+        onSelect={[Function]}
+        onYearChange={[Function]}
+        preventOpenOnFocus={false}
+        previousMonthAriaLabel="Previous Month"
+        previousMonthButtonLabel="Previous Month"
+        previousYearAriaLabel="Previous Year"
+        previousYearButtonLabel="Previous Year"
+        readOnly={false}
+        renderDayContents={[Function]}
+        scrollableMonthYearDropdown={true}
+        selected={2022-08-16T06:03:53.144Z}
+        selectsDisabledDaysInRange={false}
+        shouldCloseOnSelect={true}
+        showFourColumnMonthYearPicker={false}
+        showFullMonthYearPicker={false}
+        showMonthYearPicker={false}
+        showPopperArrow={true}
+        showPreviousMonths={false}
+        showQuarterYearPicker={false}
+        showTimeInput={false}
+        showTimeSelect={false}
+        showTwoColumnMonthYearPicker={false}
+        showYearDropdown={true}
+        showYearPicker={false}
+        strictParsing={false}
+        timeCaption="Time"
+        timeInputLabel="Time"
+        timeIntervals={30}
+        withPortal={false}
+        yearItemNumber={12}
+      />
+    </div>
+  </div>
+  <Visit
+    itemsToRender={Array []}
+    selectedDate={2022-08-16T06:03:53.144Z}
+    serviceUsersVisit={Array []}
+  />
+</div>
+`;

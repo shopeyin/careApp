@@ -45,7 +45,7 @@ function Navbar({ logOutUser, currentUser }) {
               <div id="links">
                 <Link
                   to="admin/carers"
-                  data-toggle="collapse"
+                  // data-toggle="collapse"
                   data-target="#navbarNav"
                   className="link-color"
                 >
@@ -56,7 +56,7 @@ function Navbar({ logOutUser, currentUser }) {
                   {" "}
                   <Link
                     to="admin/serviceusers"
-                    data-toggle="collapse"
+                    // data-toggle="collapse"
                     data-target="#navbarNav"
                     className="link-color"
                   >

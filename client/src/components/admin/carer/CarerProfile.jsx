@@ -63,7 +63,12 @@ function CarerProfile({ serviceUsers }) {
     };
     fetchAllCarerVisits();
   }, [params.carerId, reload]);
+  console.log(visits);
 
+  const filteredVisits = visits.filter((obj) => {
+    return obj.dateOfVisit !== undefined;
+  });
+  console.log(filteredVisits, "filetered");
   return (
     <>
       <div className="row mt-4">
@@ -87,19 +92,18 @@ function CarerProfile({ serviceUsers }) {
         <div className="col-md-5">
           <h3>
             {carer ? carer.name : ""} has{" "}
-            {visits.length > 1
-              ? `${visits.length}  visits`
-              : `${visits.length}  visit`}
+            {filteredVisits.length > 1
+              ? `${filteredVisits.length}  visits`
+              : `${filteredVisits.length}  visit`}
           </h3>
         </div>
       </div>
-      {visits &&
-        visits.map((item) => {
+      {filteredVisits &&
+        filteredVisits.map((item) => {
           return (
             <div key={item._id} className="row mt-4">
               <div className="col col-md-2">
                 {" "}
-               
                 {item.dateOfVisit ? (
                   <VisitInformation
                     visitId={item._id}

@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import AdminHomePage from "./components/admin/adminhomepage/AdminHomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import ServiceUserActivities from "./components/user/serviceuseractivities/ServiceUserActivities";
-import CarerPage from "./components/user/carerhomepage/CarerPage";
+import CarerPage from "./components/user/carerhomepage/CarerHomePage";
 import SignIn from "./components/user/SignIn";
 import Navbar from "./components/admin/navigation/Navbar";
 import "./App.scss";
 
 export const BASE_URL = "http://127.0.0.1:1000/api/v1";
 
-function App({ currentUser }) {
+function App() {
+  const currentUser = useSelector((state) => state.user.currentUser);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -55,11 +57,5 @@ function App({ currentUser }) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    loading: state.carers.loading,
-    currentUser: state.user.currentUser,
-  };
-};
-export default connect(mapStateToProps)(App);
+
+export default App;
